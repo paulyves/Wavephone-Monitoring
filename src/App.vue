@@ -14,9 +14,7 @@ export default {
 
 <style>
 
-
-
-/* .loginPage{
+.loginPage{
   margin-top:10%;
 }
 .size{
@@ -25,5 +23,5 @@ export default {
 #app{
   height: 200vh;
   background: #4d4d4d;
-} */
+}
 </style>
