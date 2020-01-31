@@ -19,9 +19,10 @@ export default {
 }
 .size{
   margin-right: 50%;
-}
+}*/ 
 #app{
-  height: 200vh;
+  height: 100vh;
   background: #4d4d4d;
-} */
+  overflow-x: hidden;
+} 
 </style>
