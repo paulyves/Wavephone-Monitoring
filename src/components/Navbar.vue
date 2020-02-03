@@ -2,8 +2,10 @@
   <div class="navbar">
   
   <b-nav pills>
-    <b-nav-item to="/login">Activities</b-nav-item>
-    <b-nav-item to="/">Registration</b-nav-item>
+    <!-- <b-nav-item to="/">Registration</b-nav-item> -->
+    <!-- <b-nav-item to="/login">Activities</b-nav-item> -->
+    <router-link class="links" to="/gridView">Activities</router-link>
+    <router-link class="links" to="/Activities">Activities</router-link>
     <b-nav-item ><b-form-input class="formInput"></b-form-input></b-nav-item>
     <b-nav-item class="formDate">{{today | formatDate}}</b-nav-item>
   </b-nav>
