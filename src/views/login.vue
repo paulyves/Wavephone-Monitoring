@@ -65,7 +65,7 @@ methods:{
             console.log("login Success")
              this.ValidData = false;
              this.$router.push({
-              path: "/gridView"
+              path: "/Registration"
             });
         }else{
             this.ValidData = true;
