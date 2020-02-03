@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Login from './views/login.vue'
 import GridView from './views/GridView.vue'
 import VueRouter from 'vue-router'
+import Activities from './views/Activities.vue'
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -18,6 +19,12 @@ export default new VueRouter({
       path: '/gridView',
       name: 'gridView',
       component: GridView
+    },
+
+    {
+      path: '/Activities',
+      name: 'Activities',
+      component: Activities
     }
     
   ]
