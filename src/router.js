@@ -16,7 +16,7 @@ export default new VueRouter({
     },
 
     {
-      path: '/gridView',
+      path: '/Registration',
       name: 'gridView',
       component: GridView
     },
