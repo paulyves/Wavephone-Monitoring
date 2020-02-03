@@ -7,11 +7,13 @@
       width="200px;"
     />
     <div class="collapse navbar-collapse ml-3">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav formMr">
         <li><b-nav-item to="/Registration">Registration</b-nav-item></li>
         <li><b-nav-item to="/Activities">Activities</b-nav-item></li>
       </ul>
-      <form class="form-inline">
+      
+      <ul class="navbar-nav formMr">
+        <li><form class="form-inline">
         <input
           class="form-control mr-sm-2"
           type="text"
@@ -25,10 +27,12 @@
           @click.prevent="btnSearch"
           >Search</b-button
         >
-      </form>
-      <ul class="navbar-nav">
-        <li>
-          <p class="formDate ml-5">{{ today }}</p>
+      </form></li>
+      </ul>
+
+      <ul>
+         <li>
+         <b-nav-item class="formDate">{{today}}</b-nav-item>
         </li>
       </ul>
     </div>
@@ -79,6 +83,9 @@ export default {
 </script>
 
 <style scoped>
+.formMr{
+  margin-right: 20%;
+}
 .router-link-exact-active {
   color: #ffffff;
   background: #1a1a1a;
