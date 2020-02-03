@@ -48,10 +48,11 @@ const actions = {
           if (response.data) {
             commit("setCallData", response.data.current_call);
             resolve(response.data);
-            console.log(response.data)
+            // console.log(response.data,"what")
           }
         })
         .catch(function(erorr) {
+          // console.log(erorr,  "What erorr")
           reject(erorr);
         });
     });
