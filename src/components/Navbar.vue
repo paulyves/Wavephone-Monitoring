@@ -122,12 +122,12 @@ a.nav-link {
 ul.nav {
   width: 100%;
 }
-.btn ,.btn:hover{
-  background: #cccccc; 
+.btn,
+.btn:hover {
+  background: #cccccc;
   color: #1a1a1a;
-
- }
- .material-icons{
+}
+.material-icons {
   color: #1a1a1a;
-} 
+}
 </style>
