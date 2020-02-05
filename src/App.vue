@@ -24,5 +24,13 @@ export default {
   height: 100vh;
   background: #4d4d4d;
   overflow-x: hidden;
+  overflow-y: scroll;
+
 } 
+#app::-webkit-scrollbar {
+    display: none;
+}
+#app{
+    -ms-overflow-style: none;
+}
 </style>
