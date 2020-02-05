@@ -27,11 +27,11 @@
         </li>
       </ul>
     </div>
-    <ul>
+    <!-- <ul>
       <li>
         <b-button @click="logOutbtn">logout</b-button>
       </li>
-    </ul>
+    </ul> -->
     <ul>
       <li>
         <b-nav-item class="formDate">{{ today }}</b-nav-item>
