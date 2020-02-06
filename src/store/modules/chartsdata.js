@@ -46,13 +46,11 @@ const actions = {
         .get("http://developer.bwddns.net:8080/fs-rest/fs/calls?waveNumber")
         .then(response => {
           if (response.data) {
-            commit("setCallData", response.data.current_call);
+            commit("setCallData", parseInt(response.data.call_count));
             resolve(response.data);
-            // console.log(response.data,"what")
           }
         })
         .catch(function(erorr) {
-          // console.log(erorr,  "What erorr")
           reject(erorr);
         });
     });
