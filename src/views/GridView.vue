@@ -17,6 +17,7 @@ export default {
   },
   data() {
     return {
+      arraydata:[],
       listExt: "",
       selectedExt: "",
       selectedWaveNum: "",
@@ -65,6 +66,42 @@ export default {
           let cell = document.getElementsByClassName(wave)[0];
           let newWave = Math.floor(numWave / 100 - 10000);
           let cell1 = document.getElementsByClassName("rowsNum")[newWave];
+
+          let waveString =  numWave.substring(5);
+          let waveNumbers = wave.substring(5);
+          let cellXruler = document.getElementsByClassName('ruler')[waveString * 1];
+          let newVal = this.arraydata[0]
+          let dataCell = document.getElementsByClassName ('ruler' )[newVal * 1];
+
+          if (numWave.length != 7) {
+             if (this.arraydata.length != 0) {
+             dataCell.classList.remove("highlight");
+               
+             }
+          }
+
+          if (waveString == waveNumbers ) {
+            this.arraydata.push(waveNumbers)
+            cellXruler.classList.add("highlight");
+
+            if (this.arraydata.length > 1) {
+                dataCell.classList.remove("highlight");
+               
+                if (this.arraydata[0] != this.arraydata[1]) {
+                   dataCell.classList.remove("highlight");
+                }else{
+                  dataCell.classList.add("highlight");
+                  
+                }
+                this.arraydata.shift()
+            }
+           
+          }
+
+
+
+
+          
 
           if (numWave == wave) {
             cell.classList.add("highlight");

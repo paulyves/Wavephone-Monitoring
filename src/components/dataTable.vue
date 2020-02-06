@@ -19,6 +19,13 @@
     <div class="">
       <table class="table table-bordered waveList container-fluid">
         <tbody>
+          <tr>
+            <td></td>
+            <td v-for="(row, index) in 100" :key="index" :title="rulerNum(1, row)" :class="rulerNum(1, row)" class="ruler" :id="rulerNum(1, row)" >
+              {{row}}
+            </td>
+          </tr>
+
           <tr v-for="row in 100" :key="row">
             <td :class="waveNum(100, row, 1)" v.b.tooltip class="rowsNum">
               <div>
@@ -91,6 +98,9 @@ export default {
   methods: {
     waveNum(maxNum, row, column) {
       return `${(row - 1) * maxNum + column + 999999}`;
+    },
+     rulerNum(maxNum, row){
+      return `${maxNum * row}`;
     },
     dataModal(wave) {
       this.listExt = "";
