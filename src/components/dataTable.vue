@@ -17,9 +17,14 @@
       </div>
     </div>
     <div class="">
-      <table class="table table-bordered waveList">
+      <table class="table table-bordered waveList container-fluid">
         <tbody>
           <tr v-for="row in 100" :key="row">
+            <td :class="waveNum(100, row, 1)" v.b.tooltip class="rowsNum">
+              <div>
+                {{ row }}
+              </div>
+            </td>
             <td
               v-for="column in 100"
               v.b.tooltip
@@ -41,22 +46,25 @@
         size="lg"
       >
         <div class="container">
-          <div class="row">
-            <div class="col-0 colColor">
-              <b><p>Register :</p></b>
-            </div>
-            <div class="col colColor">
-              <p>{{ this.selectedExt }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-0 colColor">
-              <b><p>Registered Extensions :</p></b>
-            </div>
-            <div class="col colColor">
-              <p>{{ this.listExt }}</p>
-            </div>
-          </div>
+          <table class="table-bordered container-fluid">
+            <tr>
+              <td><b>Register Status</b></td>
+              <td>
+                <div v-show="selectedExt == true">True</div>
+                <div v-show="selectedExt == false">False</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>Registered Extensions</b>
+              </td>
+              <td class="dataClass">
+                <div v-for="data in this.listExt" :key="data">
+                  {{ data }}
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </b-modal>
     </div>
@@ -72,7 +80,9 @@ export default {
     return {
       selectedWaveNum: "",
       listExt: "",
-      selectedExt: ""
+      selectedExt: "",
+      dockTrue: true,
+      dockFalse: true
     };
   },
   computed: {
@@ -82,34 +92,34 @@ export default {
     waveNum(maxNum, row, column) {
       return `${(row - 1) * maxNum + column + 999999}`;
     },
-
     dataModal(wave) {
+      this.listExt = "";
       let freeSwitch = this.getFreeSwitch;
       let parsedSwitch = JSON.parse(JSON.stringify(freeSwitch));
-      console.log(wave);
-      // this.$bvModal.show("bv-modal-example");
       this.selectedWaveNum = wave;
-
       for (let key in parsedSwitch) {
+        let registeredDock = parsedSwitch[key].dock_registered;
+        let registeredExt = parsedSwitch[key].registered_extension.reverse();
+        let newArray = [];
         if (key == wave) {
           this.$bvModal.show("bv-modal-example");
-          let ext = parsedSwitch[key].registered_extension;
-          let extensions = ext.toString();
-          this.selectedWaveNum = wave;
-          this.selectedExt = parsedSwitch[key].dock_registered;
-          this.listExt = extensions;
-          //   console.log(key, wave);
+          this.selectedExt = registeredDock;
+          //   console.log(registeredExt);
+          for (let i = 0; i < registeredExt.length; i++) {
+            newArray.push(registeredExt[i].substring(7));
+          }
+          this.listExt = newArray.sort();
         }
       }
-      console.log(wave);
     }
   }
 };
 </script>
 
 <style scoped>
-.modal-header {
-  background: #333333;
+.dataClass {
+  border: none;
+  display: table-row-group;
 }
 .col-1 {
   padding: 1;
@@ -128,9 +138,6 @@ export default {
 .highlight {
   border: #ffffff solid 2px;
 }
-.yellow {
-  background: yellow;
-}
 .form-control {
   width: 100px;
 }
@@ -141,7 +148,7 @@ export default {
   position: absolute;
 }
 .unRegistered {
-  background: red;
+  background: #eb2226;
   color: black;
   font-weight: bold;
 }
@@ -153,24 +160,12 @@ p {
   padding: 0;
   margin: 0;
 }
-.black {
-  background: black;
-  color: white;
-}
-.green {
-  background: green;
-  color: #ffffff;
-}
-.red {
-  background: #fa4d45;
-  color: #ffffff;
-}
-table {
-  /* table-layout: fixed; */
+table.waveList {
+  table-layout: fixed;
   cursor: pointer;
   border-color: #4f4f4f;
   margin-top: 20px;
-  /* border-collapse: collapse; */
+  border-collapse: collapse;
   color: white;
   text-align: center;
 }
@@ -179,7 +174,7 @@ table > tbody > tr > td {
   padding: 0;
   height: 15px;
   width: 15px;
-  font-size: 8px;
+  font-size: 10px;
   border-color: #4f4f4f;
   background: #666666;
 }
@@ -194,5 +189,8 @@ p {
 }
 .modal-header {
   background: #333333;
+}
+.rowsNum {
+  text-align: left;
 }
 </style>

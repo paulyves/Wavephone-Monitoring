@@ -1,41 +1,48 @@
 <template>
   <nav class="navbar navbar-expand-lg">
-    <img
-      src="../images/wavephone_logo1.png"
-      alt=""
-      height="50px;"
-      width="200px;"
-    />
+    <img src="" alt="" height="50px;" width="200px;" />
     <div class="collapse navbar-collapse ml-3">
       <ul class="navbar-nav formMr">
         <li><b-nav-item to="/Registration">Registration</b-nav-item></li>
         <li><b-nav-item to="/Activities">Activities</b-nav-item></li>
       </ul>
-      
-      <ul class="navbar-nav formMr">
-        <li><form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="text"
-          placeholder="Search Wavenum"
-          v-model="search"
-          @input="submit"
-          name="searchWaveNum"
-          id="searchWaveNum"
-        /><b-button
-          class="btn btn-secondary my-2 my-sm-0"
-          @click.prevent="btnSearch"
-          >Search</b-button
-        >
-      </form></li>
-      </ul>
 
-      <ul>
-         <li>
-         <b-nav-item class="formDate">{{today}}</b-nav-item>
+      <ul class="navbar-nav formMr">
+        <li>
+          <form class="form-inline">
+            <input
+              class="form-control formInput"
+              type="text"
+              placeholder="Search Wavenum"
+              v-model="search"
+              @input="submit"
+              name="searchWaveNum"
+              id="searchWaveNum"
+            />
+            <span @click.prevent="btnSearch">
+              <i class="material-icons btn btn-secondary">
+                search
+              </i>
+            </span>
+            <!-- <b-button
+              class="btn btn-secondary my-2 my-sm-0"
+              @click.prevent="btnSearch"
+              >Search</b-button
+            > -->
+          </form>
         </li>
       </ul>
     </div>
+    <!-- <ul>
+      <li>
+        <b-button @click="logOutbtn">logout</b-button>
+      </li>
+    </ul> -->
+    <ul>
+      <li>
+        <b-nav-item class="formDate">{{ today }}</b-nav-item>
+      </li>
+    </ul>
   </nav>
 </template>
 
@@ -52,15 +59,15 @@ export default {
     };
   },
   methods: {
-    callFunction: function() {
-      var currentDate = new Date();
-      if (currentDate) {
-        this.today = currentDate;
-      }
+    logOutbtn() {
+      this.$router.push({
+        path: "/"
+      });
     },
     btnSearch(event) {
       this.searchWaveNum = event.target.value;
       this.$emit("waveSearch", this.search);
+      this.search = "";
     },
     submit(event) {
       this.searchWaveNum = event.target.value;
@@ -68,23 +75,26 @@ export default {
     },
 
     dateTime() {
-      this.today = moment().format("L LT");
-      console.log(this.today);
+      let currentDate = new Date();
+      if (currentDate) {
+        this.today = currentDate;
+        this.today = moment(this.today, "M.DD.YYYY hh:mm:ss").format("L LT");
+      }
     }
   },
   mounted() {
-    this.callFunction();
+    this.dateTime();
     this.interval = setInterval(this.dateTime, 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
   }
+  // beforeDestroy() {
+  //   clearInterval(this.interval);
+  // }
 };
 </script>
 
 <style scoped>
-.formMr{
-  margin-right: 20%;
+.formMr {
+  margin-right: 30%;
 }
 .router-link-exact-active {
   color: #ffffff;
@@ -98,7 +108,10 @@ p {
   color: #ffffff;
 }
 .formInput {
-  height: 25px;
+  background: #cccccc;
+}
+ul {
+  list-style-type: none;
 }
 .navbar {
   background: #333333;
@@ -108,5 +121,13 @@ a.nav-link {
 }
 ul.nav {
   width: 100%;
+}
+.btn,
+.btn:hover {
+  background: #cccccc;
+  color: #1a1a1a;
+}
+.material-icons {
+  color: #1a1a1a;
 }
 </style>

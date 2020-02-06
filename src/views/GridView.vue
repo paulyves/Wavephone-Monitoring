@@ -62,14 +62,14 @@ export default {
     btnWave(numWave) {
       this.displaySample().then(response => {
         for (let wave in response) {
-          // let extensions = response[wave];
           let cell = document.getElementsByClassName(wave)[0];
-          // let regExt = extensions.registered_extension.length;
-          // let regDock = extensions.dock_registered;
+          let newWave = Math.floor(numWave / 100 - 10000);
+          let cell1 = document.getElementsByClassName("rowsNum")[newWave];
+
           if (numWave == wave) {
-            // cell.classList.remove("unRegistered", "unUsed");
             cell.classList.add("highlight");
-            console.log(numWave, wave);
+            cell1.classList.add("highlight");
+            console.log(cell1, numWave, wave);
           } else {
             cell.classList.remove("highlight");
           }
@@ -81,6 +81,8 @@ export default {
 
     myData() {
       this.displaySample().then(response => {
+        // console.log(response)
+
         for (let wave in response) {
           let extensions = response[wave];
           let cell = document.getElementsByClassName(wave)[0];
@@ -120,5 +122,13 @@ export default {
 } */
 .gridView {
   height: 100vh;
+  overflow-y: scroll;
+}
+
+.gridView::-webkit-scrollbar {
+  display: none;
+}
+.gridView {
+  -ms-overflow-style: none;
 }
 </style>
