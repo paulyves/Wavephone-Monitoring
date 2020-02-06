@@ -148,10 +148,10 @@ export default {
       });
       // console.log(this.getCallData, "tset")
 
-      var getTime = new Date();
-      var amOrPm = getTime.getHours() < 12 ? "AM" : "PM";
+      let getTime = new Date();
+      let amOrPm = getTime.getHours() < 12 ? "AM" : "PM";
 
-      var nowDate =
+      let nowDate =
         getTime.getDate() +
         "-" +
         (getTime.getMonth() + 1) +
@@ -243,11 +243,15 @@ export default {
     },
 
     callDataFunc() {
-      let value = [Math.random() * 100];
+      // let value = [Math.random() * 100];
       // console.log(value)
       return {
-        value: [this.timeToday.getTime(), Math.round(value)]
+        value: [this.timeToday.getTime(), Math.round(this.getCallData)]
       };
+
+      // return {
+      //   value: [this.timeToday.getTime(), Math.round(value)]
+      // };
     },
 
     btmRefresh() {
@@ -257,8 +261,8 @@ export default {
     },
 
     myCurrentTime() {
-      var getTime = new Date();
-      var now = getTime.toLocaleTimeString();
+      let getTime = new Date();
+      let now = getTime.toLocaleTimeString();
       this.navBarTime = now;
       
     }
@@ -271,7 +275,7 @@ export default {
       }
     });
 
-    this.myCurrentTime();
+    // this.myCurrentTime();
     this.callAllDataActivity();
      this.startOn();
     let loadFunc = sessionStorage.getItem("saveLoad");
