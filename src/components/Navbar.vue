@@ -1,56 +1,62 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
-    <img src="" alt="" height="50px;" width="200px;" />
-    <div class="collapse navbar-collapse ml-3">
-      <ul class="navbar-nav formMr">
+<div>
+  <nav class="navbar navbar-expand">
+    <img src="../images/wavephone_logo_header-01.png" alt="" height="50px;" width="200px;" />
+    <div class="collapse navbar-collapse" style="border-left: solid 1px;
+  color: #ffffff;">
+      <ul class="navbar-nav ml-5">
         <li><b-nav-item to="/Registration">Registration</b-nav-item></li>
         <li><b-nav-item to="/Activities">Activities</b-nav-item></li>
       </ul>
 
-      <ul class="navbar-nav formMr">
+      <ul class="navbar-nav" style="margin-left:20%;">
         <li>
-          <form class="form-inline">
-            <input
-              class="form-control formInput"
-              type="text"
-              placeholder="Search Wavenum"
-              v-model="search"
-              @input="submit"
-              name="searchWaveNum"
-              id="searchWaveNum"
-            />
-            <span @click.prevent="btnSearch">
-              <i class="material-icons btn btn-secondary">
-                search
-              </i>
-            </span>
-            <!-- <b-button
-              class="btn btn-secondary my-2 my-sm-0"
-              @click.prevent="btnSearch"
-              >Search</b-button
-            > -->
-          </form>
+          <select
+          name="timeList"
+          form="listForm"
+          :v-model="selectedTime"
+          class="form-control formInput"
+          value="2"
+        >
+          <option value="2">2s</option>
+          <option value="5">5s</option>
+          <option value="10">10s</option>
+          <option value="20">20s</option>
+        </select>
         </li>
+        <li class="ml-3 ">
+          <b-form >
+      <b-input-group-append>
+        <b-form-input id="colorFil" v-model="search" type="search"></b-form-input>
+        <b-button class="material-icons"  @click="btnSearch">search</b-button>
+      </b-input-group-append>
+      </b-form>
+        </li>
+        <li class="ml-5">
+          <p>Wave No.:</p>
+        </li>
+        <li class="ml-5">
+          <p class="ml-5">Host Name:</p>
+        </li>
+        
       </ul>
+        
     </div>
-    <!-- <ul>
-      <li>
-        <b-button @click="logOutbtn">logout</b-button>
-      </li>
-    </ul> -->
     <ul>
       <li>
         <b-nav-item class="formDate">{{ today }}</b-nav-item>
       </li>
     </ul>
   </nav>
+
+  </div>
 </template>
 
 <script>
 import moment from "moment";
 export default {
   name: "Navbar",
-  props: ["value", "type"],
+  props: ["selectedTime"],
   data() {
     return {
       search: "",
@@ -93,8 +99,32 @@ export default {
 </script>
 
 <style scoped>
-.formMr {
-  margin-right: 30%;
+.inputLi{
+width:100%;
+}
+ul.navbar-nav{
+  margin:0;
+}
+.material-icons {
+  border-radius: 2px;
+  border: 1px solid black;
+  border-left: none;
+  background: #cccccc;
+
+}
+.material-icons:hover {
+  background-color: white;
+  border: 1px solid black;
+  background: #cccccc;
+
+}
+
+#colorFil {
+  border-radius: 1px;
+  border: 1px solid black;
+  border-right: none;
+  background: #cccccc; 
+
 }
 .router-link-exact-active {
   color: #ffffff;
@@ -107,8 +137,8 @@ export default {
 p {
   color: #ffffff;
 }
-.formInput {
-  background: #cccccc;
+.formInput, .formInput:focus {
+  border: black solid 1px;
 }
 ul {
   list-style-type: none;
@@ -122,12 +152,12 @@ a.nav-link {
 ul.nav {
   width: 100%;
 }
-.btn,
-.btn:hover {
-  background: #cccccc;
+.btn ,.btn:hover{
+  background: #cccccc; 
   color: #1a1a1a;
-}
-.material-icons {
+
+ }
+ .material-icons{
   color: #1a1a1a;
-}
+} 
 </style>
