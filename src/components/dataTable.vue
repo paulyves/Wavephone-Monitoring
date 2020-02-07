@@ -1,37 +1,25 @@
 <template>
   <div class="dataTable">
-    <div class="row mt-2">
-      <div class="col-1 ml-2">
-        <select
-          name="timeList"
-          form="listForm"
-          v-model="selectedTime"
-          class="form-control"
-          value="2"
-        >
-          <option value="2">2s</option>
-          <option value="5">5s</option>
-          <option value="10">10s</option>
-          <option value="20">20s</option>
-        </select>
-      </div>
-    </div>
+    
     <div class="">
       <table class="table table-bordered waveList container-fluid">
         <tbody>
-          <tr>
-            <td></td>
+          <!-- <tr>
+            <td>0</td>
             <td v-for="(row, index) in 100" :key="index" :title="rulerNum(1, row)" :class="rulerNum(1, row)" class="ruler" :id="rulerNum(1, row)" >
               {{row}}
             </td>
-          </tr>
-
-          <tr v-for="row in 100" :key="row">
-            <td :class="waveNum(100, row, 1)" v.b.tooltip class="rowsNum">
-              <div>
-                {{ row }}
-              </div>
-            </td>
+          </tr> -->
+        
+              <!-- <tr style=""> -->
+                  <!-- <img src="../images/ruler_vertical.png" alt=""> -->
+              
+          <tr v-for="row in 100" :key="row" >
+              
+            <!-- <td :class="waveNum(100, row, 1)" v.b.tooltip class="rowsNum">
+                <img src="http://placehold.it/20x20/fb235e/fb235e" alt="" />
+              <div>{{row}}</div>
+            </td> -->
             <td
               v-for="column in 100"
               v.b.tooltip
@@ -146,6 +134,9 @@ export default {
   font-weight: bold;
 }
 .highlight {
+  border: #ffffff solid 2px;
+}
+.highlights {
   border: #ffffff solid 2px;
 }
 .form-control {
