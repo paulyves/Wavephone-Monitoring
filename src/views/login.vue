@@ -14,10 +14,16 @@
               <!-- <b-form-group></b-form-group> -->
               <b-form-input
               type="text"
+              placeholder="Host Name"
+              v-model="inputHostName"
+              >     
+              </b-form-input>
+              <br>
+              <b-form-input
+              type="text"
               placeholder="Username"
               v-model="inputUserName"
-              >
-                  
+              >     
               </b-form-input>
               <br>
               <b-form-input
@@ -50,6 +56,7 @@ components: {
 },
 data(){
   return{
+      inputHostName:"",
     dataVal: false,
         inputUserName: '',
         inputPassword: '',
@@ -61,7 +68,7 @@ methods:{
   loginFunc(){
         // console.log("test")
         this.dataVal = true;
-        if (this.inputUserName == 'admin' && this.inputPassword == 'bluewave888') {
+        if (this.inputUserName == 'admin' && this.inputPassword == 'bluewave888' && this.inputHostName.length != 0) {
             console.log("login Success")
              this.ValidData = false;
              this.$router.push({
@@ -70,7 +77,8 @@ methods:{
         }else{
             this.ValidData = true;
             this.inputUserName = '',
-            this.inputPassword = ''
+            this.inputPassword = '',
+            this.inputHostName = ''
             // console.log("Invalid Credintials", this.calingBolean)
         }
     }
@@ -103,7 +111,7 @@ methods:{
     /* max-width: 40%; */
      /* max-width: 100%; */
      /* height: 100vh; */
-     max-width: 65vh;
+     max-width: 68vh;
      /* border: 2px solid green; */
      /* height: 100%; */
 
@@ -111,7 +119,7 @@ methods:{
 
 .containerSyle1{
     
-   max-width: 80%;
+   max-width: 90%;
     /* border: 3px solid yellow; */
     
 }
@@ -119,14 +127,14 @@ methods:{
 .containerSyle2{
     margin-top: 8%;
     /* border: 3px solid green; */
-    padding-bottom: 40%;
+    padding-bottom: 20%;
 }
 
 img{
     margin-top: 15%;
-    margin-left: 25%;
+    margin-left: 27%;
     max-width: 50%;
-    height: 100px;
+    height: 70px;
     
    
 }
