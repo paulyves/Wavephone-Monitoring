@@ -1,7 +1,7 @@
 <template>
   <div class="gridView">
-    <Navbar  v-on:waveSearch="btnWave" :selectedTime="timeInterval"  />
-    <dataTable  />
+    <Navbar v-on:waveSearch="btnWave"  v-on:pickTime="setDataInterval" />
+    <dataTable />
   </div>
 </template>
 
@@ -29,110 +29,99 @@ export default {
     };
   },
   created() {
-    let setTimer = this.timeInterval;
-    console.log(this.timeInterval);
-    if (setTimer == 2) {
+    if (this.timeInterval == 2) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 2000);
-      console.log(setTimer);
+      console.log(this.timeInterval);
     }
-    if (setTimer == 5) {
+    if (this.timeInterval == 5) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 5000);
-      console.log(setTimer);
-    } else if (setTimer == 10) {
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 10) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 10000);
-      console.log(setTimer);
-    } else if (setTimer == 20) {
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 20) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 20000);
-      console.log(setTimer);
-    } else if (setTimer == 0) {
-      clearInterval(setTimer);
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 0) {
+      clearInterval(this.timeInterval);
     }
   },
   mounted() {
     this.myData();
-    console.log(this.timeInterval)
   },
   computed: {
     ...mapGetters(["getStatus", "getFreeSwitch"])
   },
   methods: {
     ...mapActions(["displaySample"]),
-
+setDataInterval(val){
+  this.timeInterval = val
+  if (this.timeInterval == 2) {
+      clearInterval(this.timeData);
+      this.timeData = setInterval(this.myData, 2000);
+      console.log(this.timeInterval);
+    }
+    if (this.timeInterval == 5) {
+      clearInterval(this.timeData);
+      this.timeData = setInterval(this.myData, 5000);
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 10) {
+      clearInterval(this.timeData);
+      this.timeData = setInterval(this.myData, 10000);
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 20) {
+      clearInterval(this.timeData);
+      this.timeData = setInterval(this.myData, 20000);
+      console.log(this.timeInterval);
+    } else if (this.timeInterval == 0) {
+      clearInterval(this.timeInterval);
+    }
+},
     btnWave(numWave) {
       this.displaySample().then(response => {
         for (let wave in response) {
-          let cell = document.getElementsByClassName(wave)[0];
           let newWave = Math.floor(numWave / 100 - 10000);
-          let cell1 = document.getElementsByClassName("rowsNum")[newWave];
+          let cell = document.getElementsByClassName(wave)[0];
+          let cell1 = document.getElementsByClassName("rows-ruler")[newWave];
+          let cell2 = cell.cellIndex;
+          // let newVal = this.arraydata[0];
+          // let newArr = this.waveData[0];
           let waveString = numWave.substring(5);
-          let waveNumbers = wave.substring(5);
+          // let waveNumbers = wave.substring(5);
           let cellXruler = document.getElementsByClassName("ruler")[
             waveString * 1
           ];
-          let newVal = this.arraydata[0];
-          let newArr = this.waveData[0];
-          let dataCell = document.getElementsByClassName("ruler")[newVal * 1];
-          let dataRow = document.getElementsByClassName("rowsNum")[
-            Math.floor(newArr / 100 - 10000)
-          ];
-          console.log(dataRow);
+          // let dataCell = document.getElementsByClassName("ruler")[newVal * 1];
+          // let dataRow = document.getElementsByClassName("rows-ruler")[
+          //   Math.floor(newArr / 100 - 10000)
+          // ];
+          let dataTag = document.getElementsByClassName("tr-colors")[newWave];
+          let dataTr = document.getElementsByClassName("tr-colors");
+console.log(wave, response[wave], numWave);
+          
           if (numWave == wave) {
             this.waveData.push(wave);
             cell.classList.add("highlight");
-            cell1.classList.add("highlight");
-            if (this.waveData.length > 1) {
-              dataRow.classList.remove("highlight");
-              // cell.classList.remove("highlight");
-              if (this.waveData[0] != this.waveData[1]) {
-                dataRow.classList.remove("highlight");
-                cell.classList.remove("highlight");
-              } else {
-                dataRow.classList.add("highlight");
-              }
-              this.waveData.shift();
-            }
-            console.log(this.waveData, numWave, wave);
-          } else {
-            cell.classList.remove("highlight");
-          }
+            cell1.classList.add("arrowImg");
+            dataTag.classList.add("horizontal-border");
+            cellXruler.classList.add("border-color");
+            cell.scrollIntoView();
+            for(let tr in dataTr){
+            dataTr[tr].cells[cell2].classList.add("border-color");
+          }      
+        }else{
+          cell.classList.remove("highlight");
+        }
 
-          
-          if (numWave.length != 7) {
-            if (this.arraydata.length != 0) {
-              dataCell.classList.remove("highlight");
-              console.log("hey");
-            }
-            if (this.waveData.length != 0) {
-              dataRow.classList.remove("highlight");
-              console.log("hey");
-            }
-          }
-
-          if (waveString == waveNumbers) {
-            this.arraydata.push(waveNumbers);
-            cellXruler.classList.add("highlight");
-            console.log(this.arraydata);
-            if (this.arraydata.length > 1) {
-              dataCell.classList.remove("highlight");
-
-              if (this.arraydata[0] != this.arraydata[1]) {
-                dataCell.classList.remove("highlight");
-              } else {
-                dataCell.classList.add("highlight");
-              }
-              this.arraydata.shift();
-            }
-          }
-
-          
+        
         }
       });
       this.num = "";
-      console.log(numWave);
+      
     },
 
     myData() {
