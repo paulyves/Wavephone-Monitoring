@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="navBar">
   <nav class="navbar navbar-expand">
     <img src="../images/wavephone_logo_header-01.png" alt="" height="50px;" width="200px;" />
     <div class="collapse navbar-collapse" style="border-left: solid 1px;
@@ -11,7 +11,8 @@
 
       <ul class="navbar-nav" style="margin-left:20%;">
         <li>
-          <select
+          <div>
+            <select
           name="timeList"
           form="listForm"
           :v-model="selectedTime"
@@ -23,6 +24,8 @@
           <option value="10">10s</option>
           <option value="20">20s</option>
         </select>
+          </div>
+          
         </li>
         <li class="ml-3 ">
           <b-form >

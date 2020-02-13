@@ -1,8 +1,11 @@
 <template>
   <div class="dataTable">
-    
-    <div class="">
-      <table class="table table-bordered waveList container-fluid">
+      <div class="row">
+          <div class="ml-3">
+              <img src="../images/ruler_vertical.png" alt="">
+          </div>
+          <div class="col mr-3">
+              <table class="table table-bordered waveList container-fluid ">
         <tbody>
           <!-- <tr>
             <td>0</td>
@@ -10,13 +13,12 @@
               {{row}}
             </td>
           </tr> -->
-        
-              <!-- <tr style=""> -->
-                  <!-- <img src="../images/ruler_vertical.png" alt=""> -->
-              
+
+               
           <tr v-for="row in 100" :key="row" >
-              
-            <!-- <td :class="waveNum(100, row, 1)" v.b.tooltip class="rowsNum">
+               
+            <!-- <td :class="waveNum(100, row, 1)" class="rowsNum">
+
                 <img src="http://placehold.it/20x20/fb235e/fb235e" alt="" />
               <div>{{row}}</div>
             </td> -->
@@ -32,6 +34,39 @@
           </tr>
         </tbody>
       </table>
+          </div>
+      </div>
+    <div class="">
+        
+      <!-- <table class="table table-bordered waveList container-fluid">
+        <tbody> -->
+          <!-- <tr>
+            <td>0</td>
+            <td v-for="(row, index) in 100" :key="index" :title="rulerNum(1, row)" :class="rulerNum(1, row)" class="ruler" :id="rulerNum(1, row)" >
+              {{row}}
+            </td>
+          </tr> -->
+
+               
+          <!-- <tr v-for="row in 100" :key="row" > -->
+               
+            <!-- <td :class="waveNum(100, row, 1)" class="rowsNum">
+
+                <img src="http://placehold.it/20x20/fb235e/fb235e" alt="" />
+              <div>{{row}}</div>
+            </td> -->
+            <!-- <td
+              v-for="column in 100"
+              v.b.tooltip
+              :title="waveNum(100, row, column)"
+              :key="column"
+              :class="waveNum(100, row, column)"
+              class="unUsed"
+              @click="dataModal(waveNum(100, row, column))"
+            ></td>
+          </tr>
+        </tbody>
+      </table> -->
 
       <b-modal
         ref="modal-1"
@@ -70,7 +105,7 @@
 import { mapGetters } from "vuex";
 export default {
   name: "dataTable",
-  props: ["selectedTime"],
+//   props: ["selectedTime"],
   data() {
     return {
       selectedWaveNum: "",
@@ -119,8 +154,15 @@ export default {
   border: none;
   display: table-row-group;
 }
+.col{
+    margin-top: 13px;
+}
+img{
+    height:99%;
+}
 .col-1 {
-  padding: 1;
+  padding-right: 0;
+    max-width: 2%;
 }
 .btn {
   background: #333333;
@@ -193,5 +235,29 @@ p {
 }
 .rowsNum {
   text-align: left;
+}
+
+
+.rulerr {
+position: relative;
+width: 99%;
+margin: 20px auto;
+height: 14px;
+display: table-row-group;
+}
+.rulerr .cm,
+.rulerr .mm {
+position: absolute;
+border-left: 1px solid white;
+height: 14px;
+width: 10%;
+}
+.rulerr .cm:after {
+position: absolute;
+bottom: -15px;
+font: 11px/1 sans-serif;
+}
+.rulerr .mm {
+height: 5px;
 }
 </style>
