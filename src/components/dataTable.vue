@@ -1,73 +1,55 @@
 <template>
   <div class="dataTable">
-      <div class="row">
-          <div class="ml-3">
-              <img src="../images/ruler_vertical.png" alt="">
-          </div>
-          <div class="col mr-3">
-              <table class="table table-bordered waveList container-fluid ">
-        <tbody>
-          <!-- <tr>
-            <td>0</td>
-            <td v-for="(row, index) in 100" :key="index" :title="rulerNum(1, row)" :class="rulerNum(1, row)" class="ruler" :id="rulerNum(1, row)" >
-              {{row}}
-            </td>
-          </tr> -->
+    <div class="row ml-0">
+      <div></div>
 
-               
-          <tr v-for="row in 100" :key="row" >
-               
-            <!-- <td :class="waveNum(100, row, 1)" class="rowsNum">
+      <div class="col mr-3">
+        <table class="table table-bordered waveList container-fluid ">
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td v-for="row in 100" :key="row" :class="waveNum(100, row, 1)">
+                <div class="arrowImg1"></div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>0</td>
+              <td
+                v-for="(row, index) in 100"
+                :key="index"
+                :class="rulerNum(1, row)"
+                class="ruler"
+                :id="rulerNum(1, row)"
+              >
+                {{ row }}
+              </td>
+            </tr>
+            <tr v-for="(row, index) in 100" :key="index" class="tr-colors">
+              <td :class="waveNum(100, row, 1)" class="rows-ruler"></td>
+              <td :class="waveNum(100, row, 1)">
+                <div>{{ row }}</div>
+              </td>
 
-                <img src="http://placehold.it/20x20/fb235e/fb235e" alt="" />
-              <div>{{row}}</div>
-            </td> -->
-            <td
-              v-for="column in 100"
-              v.b.tooltip
-              :title="waveNum(100, row, column)"
-              :key="column"
-              :class="waveNum(100, row, column)"
-              class="unUsed"
-              @click="dataModal(waveNum(100, row, column))"
-            ></td>
-          </tr>
-        </tbody>
-      </table>
-          </div>
+              <td
+                v-for="(column, index) in 100"
+                v.b.tooltip
+                :title="waveNum(100, row, column)"
+                :key="index"
+                :class="waveNum(100, row, column)"
+                :id="rulerNum(1, row)"
+                class="unUsed"
+              >
+                <!-- {{ index }} -->
+              </td>
+            </tr>
+            <!-- @click="dataModal(waveNum(100, row, column))" -->
+          </tbody>
+        </table>
       </div>
+    </div>
     <div class="">
-        
-      <!-- <table class="table table-bordered waveList container-fluid">
-        <tbody> -->
-          <!-- <tr>
-            <td>0</td>
-            <td v-for="(row, index) in 100" :key="index" :title="rulerNum(1, row)" :class="rulerNum(1, row)" class="ruler" :id="rulerNum(1, row)" >
-              {{row}}
-            </td>
-          </tr> -->
-
-               
-          <!-- <tr v-for="row in 100" :key="row" > -->
-               
-            <!-- <td :class="waveNum(100, row, 1)" class="rowsNum">
-
-                <img src="http://placehold.it/20x20/fb235e/fb235e" alt="" />
-              <div>{{row}}</div>
-            </td> -->
-            <!-- <td
-              v-for="column in 100"
-              v.b.tooltip
-              :title="waveNum(100, row, column)"
-              :key="column"
-              :class="waveNum(100, row, column)"
-              class="unUsed"
-              @click="dataModal(waveNum(100, row, column))"
-            ></td>
-          </tr>
-        </tbody>
-      </table> -->
-
       <b-modal
         ref="modal-1"
         hide-footer
@@ -105,26 +87,30 @@
 import { mapGetters } from "vuex";
 export default {
   name: "dataTable",
-//   props: ["selectedTime"],
   data() {
     return {
       selectedWaveNum: "",
       listExt: "",
       selectedExt: "",
       dockTrue: true,
-      dockFalse: true
+      dockFalse: true,
+      value: 0
     };
   },
   computed: {
-    ...mapGetters(["getStatus", "getFreeSwitch"])
+    ...mapGetters(["getStatus", "getFreeSwitch"]),
+    total: function() {
+      return this.value * 1;
+    }
   },
   methods: {
     waveNum(maxNum, row, column) {
       return `${(row - 1) * maxNum + column + 999999}`;
     },
-     rulerNum(maxNum, row){
+    rulerNum(maxNum, row) {
       return `${maxNum * row}`;
     },
+
     dataModal(wave) {
       this.listExt = "";
       let freeSwitch = this.getFreeSwitch;
@@ -150,19 +136,35 @@ export default {
 </script>
 
 <style scoped>
+.border-color {
+  border-bottom: none;
+  border-left: #b6cde5 solid 2px;
+  border-right: #b6cde5 solid 2px;
+}
+.horizontal-border {
+  border-top: #b6cde5 solid 2px;
+  border-bottom: #b6cde5 solid 2px;
+}
+table.tableRule {
+  width: 15px;
+  height: 97%;
+  table-layout: fixed;
+}
+
 .dataClass {
   border: none;
   display: table-row-group;
 }
-.col{
-    margin-top: 13px;
+/* .col {
+  margin-top: 13px;
+} */
+img {
+  height: 99%;
 }
-img{
-    height:99%;
-}
+
 .col-1 {
   padding-right: 0;
-    max-width: 2%;
+  max-width: 2%;
 }
 .btn {
   background: #333333;
@@ -176,11 +178,26 @@ img{
   font-weight: bold;
 }
 .highlight {
-  border: #ffffff solid 2px;
+  border: #c3dffc solid 2px;
+  scroll-behavior: smooth;
 }
-.highlights {
-  border: #ffffff solid 2px;
+
+.arrowImg::before {
+  background-image: url("../images/arrow.png");
+  background-size: 13px 13px;
+  display: inline-block;
+  width: 11px;
+  height: 13px;
+  content: "";
 }
+
+.arrowImg1::before {
+  background-image: url("../images/arrow_down.png");
+  background-size: 13px 13px;
+  width: 11px;
+  height: 13px;
+}
+
 .form-control {
   width: 100px;
 }
@@ -207,12 +224,13 @@ table.waveList {
   table-layout: fixed;
   cursor: pointer;
   border-color: #4f4f4f;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   border-collapse: collapse;
   color: white;
   text-align: center;
 }
 
+table > thead > tr > th,
 table > tbody > tr > td {
   padding: 0;
   height: 15px;
@@ -232,32 +250,5 @@ p {
 }
 .modal-header {
   background: #333333;
-}
-.rowsNum {
-  text-align: left;
-}
-
-
-.rulerr {
-position: relative;
-width: 99%;
-margin: 20px auto;
-height: 14px;
-display: table-row-group;
-}
-.rulerr .cm,
-.rulerr .mm {
-position: absolute;
-border-left: 1px solid white;
-height: 14px;
-width: 10%;
-}
-.rulerr .cm:after {
-position: absolute;
-bottom: -15px;
-font: 11px/1 sans-serif;
-}
-.rulerr .mm {
-height: 5px;
 }
 </style>
