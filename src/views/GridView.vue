@@ -1,6 +1,6 @@
 <template>
   <div class="gridView">
-    <Navbar v-on:waveSearch="btnWave"  v-on:pickTime="setDataInterval" />
+    <Navbar v-on:waveSearch="btnWave"  v-on:pickTime="setDataInterval" :selectedTime="this.timeInterval" />
     <dataTable />
   </div>
 </template>

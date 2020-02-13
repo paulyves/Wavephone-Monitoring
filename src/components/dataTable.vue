@@ -40,11 +40,12 @@
                 :class="waveNum(100, row, column)"
                 :id="rulerNum(1, row)"
                 class="unUsed"
+                @click="dataModal(waveNum(100, row, column))" 
               >
                 <!-- {{ index }} -->
               </td>
             </tr>
-            <!-- @click="dataModal(waveNum(100, row, column))" -->
+            
           </tbody>
         </table>
       </div>

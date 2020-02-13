@@ -70,13 +70,13 @@
 import moment from "moment";
 export default {
   name: "Navbar",
-  // props: ["selectedTime"],
+  props: ["selectedTime"],
   data() {
     return {
       search: "",
       today: "",
       searchWaveNum: "",
-      selectedTime: ""
+      // selectedTime: "2s"
     };
   },
   methods: {
