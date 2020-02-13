@@ -12,12 +12,14 @@ import NetworkChart from "vue-echarts-v3/src/full.js";
 
 export default {
   name: "NetworkCharts",
-  props: ["netDataVal"],
+  props: [ "networkData", "networkTime"],
   data() {
     return {
+      netDataVal: "",
       NetworkData: {
         xAxis: {
-          type: "time",
+          type: "category",
+          data: this.networkTime,
           axisLine: {
             lineStyle: { color: "#B1B1B1" }
           }
@@ -31,7 +33,7 @@ export default {
         },
         series: {
           type: "line",
-          data: [],
+          data: this.networkData,
           itemStyle: { color: "#3ab54a" },
           label: {
             normal: {
@@ -45,21 +47,27 @@ export default {
     };
   },
 
-  methods: {
-    NetData() {
-      let DataNet = {
-        Searies: this.NetworkData.series.data
-      };
-      this.$emit("EmitDataNet", DataNet);
-    }
-  },
+  methods: {},
 
   components: {
     NetworkChart
   },
 
-  mounted() {
-    this.NetData();
+  mounted() {},
+
+  watch: {
+    networkData: {
+      handler: function(value) {
+        this.NetworkData.series.data = value;
+        this.netDataVal = value.slice(-1)[0];
+      }
+    },
+
+    networkTime: {
+      handler: function(value) {
+        this.NetworkData.xAxis.data = value;
+      }
+    }
   }
 };
 </script>

@@ -12,15 +12,20 @@
 import CPUcharts from "vue-echarts-v3/src/full.js";
 export default {
   name: "CPUChart",
-  props: ["CallCPUchart", "CPUDataVal"],
+  props: ["cpuData", "cpuTime"],
+
+  components: {
+    CPUcharts
+  },
 
   data() {
     return {
+      CPUDataVal: "",
       value: [],
       CPUtext: "hello",
       CPUdata: {
         yAxis: {
-            type: "value",
+          type: "value",
           lineStyle: { color: "#29aae2" },
           axisLine: {
             lineStyle: {
@@ -33,18 +38,19 @@ export default {
           }
         },
         xAxis: {
-          type: "time",
+          type: "category",
           axisLine: {
             lineStyle: {
               color: "#B1B1B1"
             }
-          }
+          },
+          data: this.cpuTime
         },
 
         series: {
           type: "line",
           smooth: true,
-          data: [],
+          data: this.cpuData,
           itemStyle: { color: "#29aae2" },
           label: {
             normal: {
@@ -58,23 +64,23 @@ export default {
     };
   },
 
-  methods: {
-    SendData() {
-      let DataCPU = {
-        YaxisData: this.CPUdata.xAxis,
-        SeriesData: this.CPUdata.series.data,
-        data: this.CPUdata.yAxis.type
-      };
-      this.$emit("SendDataCPU", DataCPU);
+  methods: {},
+
+  mounted() {},
+
+  watch: {
+    cpuData: {
+      handler: function(value) {
+        this.CPUdata.series.data = value;
+        this.CPUDataVal = value.slice(-1)[0];
+      }
+    },
+
+    cpuTime: {
+      handler: function(value) {
+        this.CPUdata.xAxis.data = value;
+      }
     }
-  },
-
-  mounted() {
-    this.SendData();
-  },
-
-  components: {
-    CPUcharts
   }
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="Activities">
       <div>
       <NewNavbar :dateToday="dateNow"  :navBarTime="navBarTime" />
-      <!-- <NewNavbar :dateToday="dateNow" v-on:callBtn="startOn" :navBarTime="navBarTime" /> -->
+     
       <br />
       <br />
       <br />
@@ -25,25 +25,25 @@
       </b-row>
     </b-container>
     <b-container class="containerSyle">
-      <Callactivity @EmitCallData="barData" />
+      <Callactivity :callData = "getCallArray" :callTime = "getCallTime" />
     </b-container>
     <br />
     <b-container class="containerSyle">
       <b-row>
         <b-col class="colColor">
-          <CPUactivity @SendDataCPU="CpuData" :CPUDataVal="CPUDataVal" />
+          <CPUactivity  :cpuData = "getCPUArray" :cpuTime = "getCPUTime" :CPUDataVal="CPUDataVal" />
         </b-col>
         <b-col class="colColor1">2</b-col>
         <b-col class="colColor">
-          <RamActivity @dataSendRam="dataRam" :memoryDataVal="memoryDataVal" />
+          <RamActivity :memoryData = "getMemoryArray" :memoryTime = "getMemoryTime" :memoryDataVal="memoryDataVal" />
         </b-col>
         <b-col class="colColor1">4</b-col>
         <b-col class="colColor">
-          <Networkactivity @EmitDataNet="NetData" :netDataVal="netDataVal" />
+          <Networkactivity :networkData = "getNetworkArray" :networkTime = "getNetworkTime" :netDataVal="netDataVal" />
         </b-col>
         <b-col class="colColor1">6</b-col>
         <b-col class="colColor">
-          <Diskactivity @emitArrayDisk="DiskData" :diskDataVal="diskDataVal" />
+          <Diskactivity :diskData = "getDiskArray" :diskTime = "getDiskTime" :diskDataVal="diskDataVal" />
         </b-col>
       </b-row>
     </b-container>
@@ -96,11 +96,8 @@ export default {
       dataVar: "",
       timeToday: "",
 
-      CallData: "",
-      dataCPU: "",
-      netData: "",
-      ramData: "",
-      diskDataObj: ""
+      
+    
         }
 
 
@@ -112,25 +109,8 @@ export default {
     methods:{
         ...mapActions(["callAllDataActivity", "callData"]),
 
-    barData(objVal) {
-      this.CallData = objVal;
-    },
 
-    CpuData(objVal) {
-      this.dataCPU = objVal;
-    },
-
-    dataRam(objValRam) {
-      this.ramData = objValRam;
-    },
-
-    NetData(objVal) {
-      this.netData = objVal;
-    },
-
-    DiskData(objVal) {
-      this.diskDataObj = objVal;
-    },
+  
 
     startOn() {
       if (this.setSec == "2s") {
@@ -141,118 +121,10 @@ export default {
 
     myTimer() { 
       this.callData()
-      .then(response => {
-        if (response) {
-          this.dataCall = response;
-        }
-      });
-      // console.log(this.getCallData, "tset")
-
-      let getTime = new Date();
-      let amOrPm = getTime.getHours() < 12 ? "AM" : "PM";
-
-      let nowDate =
-        getTime.getDate() +
-        "-" +
-        (getTime.getMonth() + 1) +
-        "-" +
-        getTime.getFullYear();
-      (this.timeToday = getTime),
-        (this.dateNow = nowDate),
-        (this.SecTIme =
-          getTime.getHours() +
-          ":" +
-          getTime.getMinutes() +
-          ":" +
-          getTime.getSeconds() +
-          " " +
-          amOrPm);
-
-      this.callAllDataActivity().then(response => {
-        if (response) {
-          this.diskDataVal = this.getDataAll.disk;
-          this.memoryDataVal = this.getDataAll.memory;
-          this.CPUDataVal = this.getDataAll.cpu;
-          this.netDataVal = this.getDataAll.network;
-
-          if (this.dataCPU) {
-            if (this.dataCPU.SeriesData.length > 20) {
-              this.dataCPU.SeriesData.shift(this.dataCPU.SeriesData[0]);
-            }
-            this.dataCPU.SeriesData.push(this.CPUDataFunc());
-          }
-
-          if (this.ramData) {
-            if (this.ramData.Searies.length > 20) {
-              this.ramData.Searies.shift(this.ramData.Searies[0]);
-            }
-            this.ramData.Searies.push(this.memoryDataFunc());
-          }
-
-          if (this.netData) {
-            if (this.netData.Searies.length > 20) {
-              this.netData.Searies.shift(this.netData.Searies[0]);
-            }
-
-            this.netData.Searies.push(this.Networkfunc());
-          }
-
-          if (this.diskDataObj) {
-            if (this.diskDataObj.diskArray.length > 20) {
-              this.diskDataObj.diskArray.shift(this.diskDataObj.diskArray[0]);
-            }
-            this.diskDataObj.diskArray.push(this.diskDataFunc());
-          }
-
-          if (this.CallData) {
-            if (this.CallData.DataCall.length > 20) {
-              this.CallData.DataCall.shift(this.CallData.DataCall[0]);
-            }
-
-            this.CallData.DataCall.push(this.callDataFunc());
-          }
-        }
-      });
-
-      //
+      this.callAllDataActivity()
     },
 
-    diskDataFunc() {
-      return {
-        value: [this.timeToday.getTime(), Math.round(this.diskDataVal)]
-      };
-    },
-
-    memoryDataFunc() {
-      // let now = new Date();
-      return {
-        value: [this.timeToday.getTime(), Math.round(this.memoryDataVal)]
-      };
-    },
-
-    CPUDataFunc() {
-      return {
-        value: [this.timeToday.getTime(), Math.round(this.CPUDataVal)]
-      };
-    },
-
-    Networkfunc() {
-      return {
-        value: [this.timeToday.getTime(), Math.round(this.netDataVal)]
-      };
-    },
-
-    callDataFunc() {
-      // let value = [Math.random() * 100];
-      // console.log(value)
-      return {
-        value: [this.timeToday.getTime(), Math.round(this.getCallData)]
-      };
-
-      // return {
-      //   value: [this.timeToday.getTime(), Math.round(value)]
-      // };
-    },
+  
 
     btmRefresh() {
       let SecVal = this.setSec;
@@ -260,26 +132,13 @@ export default {
       document.location.reload(false);
     },
 
-    myCurrentTime() {
-      let getTime = new Date();
-      let now = getTime.toLocaleTimeString();
-      this.navBarTime = now;
-      
-    }
+   
     },
 
     mounted(){
-        this.callData().then(response => {
-      if (response) {
-        this.dataCall = response;
-      }
-    });
-
-    // this.myCurrentTime();
-    this.callAllDataActivity();
+     
      this.startOn();
     let loadFunc = sessionStorage.getItem("saveLoad");
-      console.log(loadFunc, "loadFunc")
     if (loadFunc != null) {
       sessionStorage.removeItem("saveLoad");
       if (loadFunc == "2s") {
@@ -303,7 +162,9 @@ export default {
     },
 
      computed: {
-    ...mapGetters(["getDataAll", "getCallData"])
+    ...mapGetters(["getCallArray", "getCallTime", "getCPUArray", "getCPUTime",
+    "getMemoryArray", "getMemoryTime", "getNetworkArray", "getNetworkTime", "getDiskArray",
+    "getDiskTime"])
   },
 
 
@@ -316,7 +177,7 @@ export default {
         }
         if (objVal == "5s") {
           clearInterval(this.dataVar);
-
+          console.log("tests Watch")
           this.dataVar = setInterval(this.myTimer, 5000);
         }
         if (objVal == "10s") {
@@ -339,6 +200,10 @@ export default {
       }
     }
   },
+
+  beforeDestroy(){
+    clearInterval(this.dataVar);
+  }
 
 
 }

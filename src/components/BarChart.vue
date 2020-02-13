@@ -1,7 +1,5 @@
 <template>
   <div class="barSize">
-   
-
     <Callcharts :option="BarData" :resizable="true" />
   </div>
 </template>
@@ -9,15 +7,11 @@
 <script>
 import Callcharts from "vue-echarts-v3/src/full.js";
 export default {
-  props: ["SecTIme"],
+  props: ["SecTIme", "callData", "callTime"],
 
   data() {
     return {
-      
-      
-
       changeSecond: [
-       
         { item: "2s", name: "2s" },
         { item: "5s", name: "5s" },
         { item: "10s", name: "10s" },
@@ -32,25 +26,26 @@ export default {
 
         dataZoom: [
           {
-           
-          },
-          
+            type: "slider",
+
+            start: 100,
+            end: 50
+          }
         ],
 
         yAxis: {
-        //   type: "value"
+          //   type: "value"
         },
 
         xAxis: {
-          type: "time",
-
-          data: [],
+          type: "category",
+          data: this.callTime,
           boundaryGap: false
         },
 
         series: {
           smooth: true,
-          data: [],
+          data: this.callData,
           type: "line",
           areaStyle: {}
         }
@@ -58,25 +53,25 @@ export default {
     };
   },
 
-  methods: {
-    sendData() {
-      let CallData = {
-        DataCall: this.BarData.series.data
-      };
-      this.$emit("EmitCallData", CallData);
-    },
+  methods: {},
 
-   
-  },
-
-  mounted() {
-    this.sendData();
-    
-  },
+  mounted() {},
 
   created() {},
 
-  watch: {},
+  watch: {
+    callData: {
+      handler: function(value) {
+        this.BarData.series.data = value;
+      }
+    },
+
+    callTime: {
+      handler: function(value) {
+        this.BarData.xAxis.data = value;
+      }
+    }
+  },
 
   components: {
     Callcharts
