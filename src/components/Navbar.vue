@@ -23,10 +23,10 @@
               <select
                 name="timeList"
                 form="listForm"
-                v-model="selectedTime"
                 class="form-control formInput"
-                value="2"
                 @click="selectInterval"
+                :value="value"
+                @input="$emit('input', $event.target.value)"
               >
                 <option value="2">2s</option>
                 <option value="5">5s</option>
@@ -70,23 +70,25 @@
 import moment from "moment";
 export default {
   name: "Navbar",
-  props: ["selectedTime"],
+  props: ["value"],
   data() {
     return {
       search: "",
       today: "",
       searchWaveNum: "",
-      // selectedTime: "2s"
     };
   },
   methods: {
+    updateModel(event) {
+      this.$emit("input", event.target.value);
+    },
     logOutbtn() {
       this.$router.push({
         path: "/"
       });
     },
-    selectInterval() {
-      this.$emit("pickTime", this.selectedTime);
+    selectInterval(event) {
+      this.$emit("pickTime", event.target.value);
     },
     btnSearch(event) {
       this.searchWaveNum = event.target.value;
