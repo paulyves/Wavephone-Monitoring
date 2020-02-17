@@ -7,11 +7,11 @@
         <table class="table table-bordered waveList container-fluid ">
           <tbody>
             <tr>
-              <td></td>
+              <!-- <td></td>
               <td></td>
               <td v-for="row in 100" :key="row" :class="waveNum(100, row, 1)">
                 <div class="arrowImg1"></div>
-              </td>
+              </td> -->
             </tr>
             <tr>
               <td></td>
@@ -27,8 +27,8 @@
               </td>
             </tr>
             <tr v-for="(row, index) in 100" :key="index" class="tr-colors">
-              <td :class="waveNum(100, row, 1)" class="rows-ruler"></td>
-              <td :class="waveNum(100, row, 1)">
+              <td  class="rows-ruler"></td>
+              <td >
                 <div>{{ row }}</div>
               </td>
 
@@ -38,8 +38,8 @@
                 :title="waveNum(100, row, column)"
                 :key="index"
                 :class="waveNum(100, row, column)"
-                :id="rulerNum(1, row)"
-                class="unUsed"
+                :id="waveNum(100, row, column)"
+                class="unUsed wave-list"
                 @click="dataModal(waveNum(100, row, column))" 
               >
                 <!-- {{ index }} -->
@@ -113,6 +113,7 @@ export default {
     },
 
     dataModal(wave) {
+      this.$bvModal.show("bv-modal-example");
       this.listExt = "";
       let freeSwitch = this.getFreeSwitch;
       let parsedSwitch = JSON.parse(JSON.stringify(freeSwitch));
