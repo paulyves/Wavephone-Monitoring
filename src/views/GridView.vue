@@ -1,18 +1,22 @@
 <template>
   <div class="gridView">
-    <Navbar v-on:waveSearch="btnWave" v-on:pickTime="setDataInterval" v-model="timeInterval" />
+    <!-- <Navbar
+      v-on:waveSearch="btnWave"
+      v-on:pickTime="setDataInterval"
+      v-model="timeInterval"
+    /> -->
     <dataTable />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 import dataTable from "../components/dataTable";
 export default {
   name: "gridView",
   components: {
-    Navbar,
+    // Navbar,
     dataTable
   },
   data() {

@@ -72,7 +72,7 @@ methods:{
             console.log("login Success")
              this.ValidData = false;
              this.$router.push({
-              path: "/Registration"
+              path: "/Main"
             });
         }else{
             this.ValidData = true;
