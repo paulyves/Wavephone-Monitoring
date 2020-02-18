@@ -4,6 +4,7 @@ import Login from './views/login.vue'
 import GridView from './views/GridView.vue'
 import VueRouter from 'vue-router'
 import Activities from './views/Activities.vue'
+import Main from './views/Main.vue'
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -13,6 +14,11 @@ export default new VueRouter({
       path:'/',
       name:'login',
       component: Login
+    },
+    {
+      path: '/Main',
+      name: 'main',
+      component: Main
     },
 
     {
