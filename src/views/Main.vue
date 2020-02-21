@@ -13,12 +13,12 @@
       </template>
 
       
-      <b-tab title="Registration" active>
+      <b-tab title="Registration"  @click.prevent="pauseData1" active>
         <Registration
-        />
+         />
       </b-tab>
-      <b-tab title="Activities">
-        <Activities />
+      <b-tab title="Activities" @click.prevent="pauseData">
+        <Activities  />
       </b-tab>
      <template v-slot:tabs-end>
 
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import Registration from "./GridView.vue";
 import Activities from "./Activities.vue";
 import moment from "moment";
@@ -77,7 +77,8 @@ export default {
       search: "",
       today: "",
       searchWaveNum: "",
-      timeInterval: "2"
+      timeInterval: "2",
+      timeData:"",
     };
   },
 
@@ -87,10 +88,17 @@ export default {
     this.interval = setInterval(this.dateTime, 1000);
   },
   computed:{
-    ...mapGetters()
   },
   methods: {
     ...mapActions(["displaySample"]),
+    pauseData(){
+      clearTimeout(this.timeData)
+      // console.log('true', this.timeData)
+    },
+    pauseData1(){
+      setTimeout(this.selectInterval())
+      // console.log(this.timeInterval)
+    },
   btnSearch() {
     let numWave = this.search;
       console.log(numWave)
@@ -135,6 +143,7 @@ export default {
       });
     },
     selectInterval() {
+     
       if (this.timeInterval == 2) {
         clearInterval(this.timeData);
         this.timeData = setInterval(this.myData, 2000);
@@ -155,7 +164,7 @@ export default {
       } else if (this.timeInterval == 0) {
         clearInterval(this.timeInterval);
       }
-      console.log(this.value)
+      console.log(this.timeInterval)
     },
     dateTime() {
       let currentDate = new Date();
@@ -166,10 +175,12 @@ export default {
     }
   },
   created() {
+
+
     if (this.timeInterval == 2) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 2000);
-      console.log(this.timeInterval);
+      console.log(this.timeInterval,this.timeData );
     }
     if (this.timeInterval == 5) {
       clearInterval(this.timeData);
