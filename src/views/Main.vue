@@ -67,7 +67,6 @@ import Activities from "./Activities.vue";
 import moment from "moment";
 export default {
   name: "Main",
-  // props: ["value"],
   components: {
     Activities,
     Registration
@@ -93,11 +92,15 @@ export default {
     ...mapActions(["displaySample"]),
     pauseData(){
       clearTimeout(this.timeData)
-      // console.log('true', this.timeData)
+      /* Click event of Activities tab 
+      *after clicked the Registration data will stop/pause
+      */
     },
     pauseData1(){
       setTimeout(this.selectInterval())
-      // console.log(this.timeInterval)
+      /*Click event
+      *after clicked the Registration data interval will start
+       */
     },
   btnSearch() {
     let numWave = this.search;
@@ -106,31 +109,54 @@ export default {
     },
    myData() {
       this.displaySample().then(response => {
-        // console.log(response)
+        console.log(response)
 
         for (let wave in response) {
           let extensions = response[wave];
           let cell = document.getElementsByClassName(wave)[0];
           let regExt = extensions.registered_extension.length;
           let regDock = extensions.dock_registered;
-
+           /*
+            regDock = display true when dock is registered and false when dock is not registered.
+            */
           if (regDock == true) {
+            /**if regDock is true
+             * add classlist 'isRegistered'(highlight when dock is registered)
+             */
             cell.classList.remove("unRegistered", "unUsed");
             cell.classList.add("isRegistered");
 
             if (regExt != []) {
               cell.innerHTML = regExt;
+              /*
+              regExt = length of extension numbers
+              *will be displayed when there are registered extension
+              */
             } else {
               cell.innerHTML = "";
+              /**
+               * when there is no registered extension
+               */
             }
           } else {
+            /**
+             * else if regDock is false
+             * add classlist 'unRegistered' and removed class 'isRegistered'
+             */
             cell.classList.remove("isRegistered", "unUsed");
             cell.classList.add("unRegistered");
             if (regDock == false) {
               if (regExt != []) {
                 cell.innerHTML = regExt;
+                /*
+              regExt = length of extension numbers
+              *will be displayed when there are registered extension
+              */
               } else {
                 cell.innerHTML = "";
+                /**
+               * when there is no registered extension
+               */
               }
             }
           }
@@ -164,7 +190,7 @@ export default {
       } else if (this.timeInterval == 0) {
         clearInterval(this.timeInterval);
       }
-      console.log(this.timeInterval)
+      console.log(this.timeInterval, this.timeData)
     },
     dateTime() {
       let currentDate = new Date();
@@ -180,7 +206,7 @@ export default {
     if (this.timeInterval == 2) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 2000);
-      console.log(this.timeInterval,this.timeData );
+     
     }
     if (this.timeInterval == 5) {
       clearInterval(this.timeData);
@@ -197,6 +223,7 @@ export default {
     } else if (this.timeInterval == 0) {
       clearInterval(this.timeInterval);
     }
+     console.log(this.timeInterval,this.timeData );
   }
 };
 </script>
