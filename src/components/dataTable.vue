@@ -1,7 +1,6 @@
 <template>
   <div class="dataTable">
     <div class="row ml-0">
-      <div></div>
 
       <div class="col mr-3">
         <table class="table table-bordered waveList container-fluid ">
@@ -111,10 +110,11 @@ export default {
     rulerNum(maxNum, row) {
       return `${maxNum * row}`;
     },
-
+    
     dataModal(wave) {
+      /*@params {string}
+    wave = available wavenumber in cells   */
       this.$bvModal.show("bv-modal-example");
-      this.listExt = "";
       let freeSwitch = this.getFreeSwitch;
       let parsedSwitch = JSON.parse(JSON.stringify(freeSwitch));
       this.selectedWaveNum = wave;
@@ -125,11 +125,12 @@ export default {
         if (key == wave) {
           this.$bvModal.show("bv-modal-example");
           this.selectedExt = registeredDock;
-          //   console.log(registeredExt);
+          /* registeredDock = if dock is registered or not  */
           for (let i = 0; i < registeredExt.length; i++) {
             newArray.push(registeredExt[i].substring(7));
           }
           this.listExt = newArray.sort();
+          /* newArray.sort() = list of registered extension and will be displayed in order */
         }
       }
     }
