@@ -69,6 +69,8 @@ export default {
   mounted() {},
 
   watch: {
+    //@desc need to get the value of "memoryData" and "memoryTime" Array from the vuex. because the library of vue-echarts-v3 have bug.
+    //to Display the value.
     memoryData: {
       handler: function(value) {
         this.DataCall.series.data = value;

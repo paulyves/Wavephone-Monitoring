@@ -57,6 +57,8 @@ export default {
   mounted() {},
 
   watch: {
+     //@desc need to get the value of "diskData" and "diskTime" Array from the vuex. because the library of vue-echarts-v3 have bug.
+    //to Display the value.
     diskData: {
       handler: function(value) {
         this.DiskData.series.data = value;

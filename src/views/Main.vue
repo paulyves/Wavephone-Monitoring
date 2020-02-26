@@ -18,7 +18,7 @@
          />
       </b-tab>
       <b-tab title="Activities" @click.prevent="pauseData">
-        <Activities  />
+        <Activities :timeInterval ="timeInterval" :btnActive= "btnActive" />
       </b-tab>
      <template v-slot:tabs-end>
 
@@ -73,6 +73,8 @@ export default {
   },
   data() {
     return {
+      btnActive: false,
+
       search: "",
       today: "",
       searchWaveNum: "",
@@ -92,11 +94,14 @@ export default {
     ...mapActions(["displaySample"]),
     pauseData(){
       clearTimeout(this.timeData)
+      this.btnActive = true;
+
       /* Click event of Activities tab 
       *after clicked the Registration data will stop/pause
       */
     },
     pauseData1(){
+      this.btnActive = false;
       setTimeout(this.selectInterval())
       /*Click event
       *after clicked the Registration data interval will start
@@ -109,7 +114,7 @@ export default {
     },
    myData() {
       this.displaySample().then(response => {
-        console.log(response)
+        // console.log(response)
 
         for (let wave in response) {
           let extensions = response[wave];
@@ -190,7 +195,7 @@ export default {
       } else if (this.timeInterval == 0) {
         clearInterval(this.timeInterval);
       }
-      console.log(this.timeInterval, this.timeData)
+      // console.log(this.timeInterval, this.timeData)
     },
     dateTime() {
       let currentDate = new Date();
@@ -201,8 +206,7 @@ export default {
     }
   },
   created() {
-
-
+    
     if (this.timeInterval == 2) {
       clearInterval(this.timeData);
       this.timeData = setInterval(this.myData, 2000);
@@ -223,7 +227,7 @@ export default {
     } else if (this.timeInterval == 0) {
       clearInterval(this.timeInterval);
     }
-     console.log(this.timeInterval,this.timeData );
+    //  console.log(this.timeInterval,this.timeData );
   }
 };
 </script>
