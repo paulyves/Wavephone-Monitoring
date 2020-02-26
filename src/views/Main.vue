@@ -94,6 +94,7 @@ export default {
     ...mapActions(["displaySample"]),
     pauseData(){
       clearTimeout(this.timeData)
+      //@param btnActive - set btnActive = true; if "pauseData" or activity Tab is Click;
       this.btnActive = true;
 
       /* Click event of Activities tab 
