@@ -148,7 +148,6 @@ export default {
     btnActive: {
       handler: function(activeVal) {
         if (activeVal == true) {
-          console.log(activeVal, "activeVal");
           clearInterval(this.varInterval);
           this.varInterval = setInterval(this.myTimer, this.timeInterval*1000);
         } else {
@@ -161,10 +160,10 @@ export default {
       handler: function (valData) {
         // console.log(valData, "valData");
        
-         if (valData != null) {
+        //  if (valData != null) {
           clearInterval(this.varInterval);
           this.varInterval = setInterval(this.myTimer, valData*1000);
-         }
+        //  }
       }
     }
   }
