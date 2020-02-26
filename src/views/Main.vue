@@ -14,7 +14,7 @@
 
       
       <b-tab title="Registration"  @click.prevent="pauseData1" active>
-        <Registration
+        <Registration :dataInterval="timeInterval" :isActive="isActive"
          />
       </b-tab>
       <b-tab title="Activities" @click.prevent="pauseData">
@@ -28,13 +28,16 @@
             name="timeList"
             form="listForm"
             class="form-control formInput"
-            @click="selectInterval"
             v-model="timeInterval"
           >
             <option value="2">2s</option>
             <option value="5">5s</option>
             <option value="10">10s</option>
-            <option value="20">20s</option>
+            <option value="30">20s</option>
+            <option value="30">30s</option>
+            <option value="60">60s</option>
+
+
           </select>
         </b-nav-item>
 
@@ -47,7 +50,7 @@
                 v-model="search"
                 type="search"
               ></b-form-input>
-              <b-button class="material-icons" @click="btnSearch"
+              <b-button class="material-icons"
                 >search</b-button
               >
             </b-input-group-append>
@@ -74,7 +77,7 @@ export default {
   data() {
     return {
       btnActive: false,
-
+      isActive:true,
       search: "",
       today: "",
       searchWaveNum: "",
@@ -84,119 +87,41 @@ export default {
   },
 
   mounted() {
-    this.myData();
     this.dateTime();
     this.interval = setInterval(this.dateTime, 1000);
+    /**
+     * @param this.interval = sets the date/time interval
+     */
   },
   computed:{
   },
   methods: {
     ...mapActions(["displaySample"]),
     pauseData(){
-      clearTimeout(this.timeData)
       //@param btnActive - set btnActive = true; if "pauseData" or activity Tab is Click;
+      /*
+      isActive = if 'isActive' equals false the data interval will pause/stop;
+      */ 
       this.btnActive = true;
-
+      this.isActive = false;
       /* Click event of Activities tab 
       *after clicked the Registration data will stop/pause
       */
     },
     pauseData1(){
       this.btnActive = false;
-      setTimeout(this.selectInterval())
+      this.isActive = true;
+      /**
+       * if isActive is equals to true the data interval will start.
+       */
       /*Click event
       *after clicked the Registration data interval will start
        */
-    },
-  btnSearch() {
-    let numWave = this.search;
-      console.log(numWave)
-     
-    },
-   myData() {
-      this.displaySample().then(response => {
-        // console.log(response)
-
-        for (let wave in response) {
-          let extensions = response[wave];
-          let cell = document.getElementsByClassName(wave)[0];
-          let regExt = extensions.registered_extension.length;
-          let regDock = extensions.dock_registered;
-           /*
-            regDock = display true when dock is registered and false when dock is not registered.
-            */
-          if (regDock == true) {
-            /**if regDock is true
-             * add classlist 'isRegistered'(highlight when dock is registered)
-             */
-            cell.classList.remove("unRegistered", "unUsed");
-            cell.classList.add("isRegistered");
-
-            if (regExt != []) {
-              cell.innerHTML = regExt;
-              /*
-              regExt = length of extension numbers
-              *will be displayed when there are registered extension
-              */
-            } else {
-              cell.innerHTML = "";
-              /**
-               * when there is no registered extension
-               */
-            }
-          } else {
-            /**
-             * else if regDock is false
-             * add classlist 'unRegistered' and removed class 'isRegistered'
-             */
-            cell.classList.remove("isRegistered", "unUsed");
-            cell.classList.add("unRegistered");
-            if (regDock == false) {
-              if (regExt != []) {
-                cell.innerHTML = regExt;
-                /*
-              regExt = length of extension numbers
-              *will be displayed when there are registered extension
-              */
-              } else {
-                cell.innerHTML = "";
-                /**
-               * when there is no registered extension
-               */
-              }
-            }
-          }
-        }
-      });
     },
     logOutbtn() {
       this.$router.push({
         path: "/"
       });
-    },
-    selectInterval() {
-     
-      if (this.timeInterval == 2) {
-        clearInterval(this.timeData);
-        this.timeData = setInterval(this.myData, 2000);
-        console.log(this.timeInterval);
-      }
-      if (this.timeInterval == 5) {
-        clearInterval(this.timeData);
-        this.timeData = setInterval(this.myData, 5000);
-        console.log(this.timeInterval);
-      } else if (this.timeInterval == 10) {
-        clearInterval(this.timeData);
-        this.timeData = setInterval(this.myData, 10000);
-        console.log(this.timeInterval);
-      } else if (this.timeInterval == 20) {
-        clearInterval(this.timeData);
-        this.timeData = setInterval(this.myData, 20000);
-        console.log(this.timeInterval);
-      } else if (this.timeInterval == 0) {
-        clearInterval(this.timeInterval);
-      }
-      // console.log(this.timeInterval, this.timeData)
     },
     dateTime() {
       let currentDate = new Date();
@@ -206,30 +131,6 @@ export default {
       }
     }
   },
-  created() {
-    
-    if (this.timeInterval == 2) {
-      clearInterval(this.timeData);
-      this.timeData = setInterval(this.myData, 2000);
-     
-    }
-    if (this.timeInterval == 5) {
-      clearInterval(this.timeData);
-      this.timeData = setInterval(this.myData, 5000);
-      console.log(this.timeInterval);
-    } else if (this.timeInterval == 10) {
-      clearInterval(this.timeData);
-      this.timeData = setInterval(this.myData, 10000);
-      console.log(this.timeInterval);
-    } else if (this.timeInterval == 20) {
-      clearInterval(this.timeData);
-      this.timeData = setInterval(this.myData, 20000);
-      console.log(this.timeInterval);
-    } else if (this.timeInterval == 0) {
-      clearInterval(this.timeInterval);
-    }
-    //  console.log(this.timeInterval,this.timeData );
-  }
 };
 </script>
 
