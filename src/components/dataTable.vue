@@ -120,17 +120,18 @@ export default {
       this.selectedWaveNum = wave;
       for (let key in parsedSwitch) {
         let registeredDock = parsedSwitch[key].dock_registered;
-        let registeredExt = parsedSwitch[key].registered_extension.reverse();
+        /* registeredExt = list of registered extension */
+        let registeredExt = parsedSwitch[key].registered_extension;
         let newArray = [];
         if (key == wave) {
           this.$bvModal.show("bv-modal-example");
           this.selectedExt = registeredDock;
-          /* registeredDock = if dock is registered or not  */
+          /* registeredDock = will display if dock is registered or not  */
           for (let i = 0; i < registeredExt.length; i++) {
             newArray.push(registeredExt[i].substring(7));
           }
           this.listExt = newArray.sort();
-          /* newArray.sort() = list of registered extension and will be displayed in order */
+          /* newArray.sort() = list of registered extension and will be displayed in order. */
         }
       }
     }
