@@ -28,8 +28,8 @@ export default {
           {
             type: "slider",
 
-            start: 100,
-            end: 50
+            // start: 100,
+            // end: 50
           }
         ],
 

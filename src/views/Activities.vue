@@ -1,8 +1,7 @@
 <template>
   <div class="Activities">
     <div>
-    
-
+  
       <br />
       <br />
       <br />
@@ -103,44 +102,28 @@ export default {
     },
 
     btmRefresh() {
-      // @desc:
-      //  btmRefresh is method for 'Refresh' button of Activities tab, When you Click Refresh,
-      // the Current "timeInterval" will save into "sessionStorage", to avoid Refresh "timeInterval"
+      //@desc: All Arrays of "data" graph and "time" is = 0 ;
+     
+      this.getCallArray.length = 0;
+      this.getCallTime.length = 0;
 
-      //@param:
-      // "SecVal" - the value of timeInterval from the dropdown list of Navbar;
-      let SecVal = this.timeInterval;
-      sessionStorage.setItem("saveLoad", SecVal);
-      document.location.reload(false);
+      this.getDiskArray.length = 0;
+      this.getDiskTime.length = 0;
+
+      this.getMemoryArray.length = 0;
+      this.getMemoryTime.length = 0;
+
+      this.getCPUArray.length = 0;
+      this.getCPUTime.length = 0;
+
+      this.getNetworkArray.length = 0;
+      this.getNetworkTime.length = 0;
+
+     
     }
   },
 
   mounted() {
-
-    //@desc: if the loadFunc have item inside 'essionStorage.getItem("saveLoad");', 
-    // it will run condition statement, if not. it will not run the condition statement.
-
-    //@param: loadFunc - value of "getItem" from the session
-    let loadFunc = sessionStorage.getItem("saveLoad");
-    if (loadFunc != null) {
-      sessionStorage.removeItem("saveLoad");
-      if (loadFunc == "2s") {
-        this.setSec = "2s";
-        this.startOn();
-      }
-      if (loadFunc == "5s") {
-        this.setSec = "5s";
-      }
-      if (loadFunc == "10s") {
-        this.setSec = "10s";
-      }
-      if (loadFunc == "30s") {
-        this.setSec = "30s";
-      }
-      if (loadFunc == "60s") {
-        this.setSec = "60s";
-      }
-    }
 
   },
 
@@ -161,30 +144,27 @@ export default {
 
   watch: {
     //@desc: btnActive - use for checking, if Activities Tab is 'Active' or not.
-    //@param: btnActive - from props.
-    //@return: varInterval = this.varInterval.
+    //@return: varInterval = this.varInterval, btnActive - from props, timeInterval - from props
     btnActive: {
       handler: function(activeVal) {
         if (activeVal == true) {
-          if (this.timeInterval == 2) {
-            this.varInterval = setInterval(this.myTimer, 2000);
-            // console.log("2 watch");
-          } else if (this.timeInterval == 5) {
-            this.varInterval = setInterval(this.myTimer, 5000);
-            // console.log("5 watch ");
-          } else if (this.timeInterval == 10) {
-            this.varInterval = setInterval(this.myTimer, 10000);
-            // console.log("10 watch ");
-          } else if (this.varInterval == 30) {
-            this.varInterval = setInterval(this.myTimer, 30000);
-            // console.log("30 watch ");
-          } else if (this.varInterval == 60) {
-            this.varInterval = setInterval(this.myTimer, 60000);
-            // console.log("60 watch ");
-          }
+          console.log(activeVal, "activeVal");
+          clearInterval(this.varInterval);
+          this.varInterval = setInterval(this.myTimer, this.timeInterval*1000);
         } else {
           clearInterval(this.varInterval);
         }
+      }
+    },
+
+    timeInterval:{
+      handler: function (valData) {
+        // console.log(valData, "valData");
+       
+         if (valData != null) {
+          clearInterval(this.varInterval);
+          this.varInterval = setInterval(this.myTimer, valData*1000);
+         }
       }
     }
   }
