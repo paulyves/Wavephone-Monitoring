@@ -69,6 +69,8 @@ export default {
   mounted() {},
 
   watch: {
+     //@desc need to get the value of "callData" and "callTime" Array from the vuex. because the library of vue-echarts-v3 have bug.
+    //to Display the value.
     cpuData: {
       handler: function(value) {
         this.CPUdata.series.data = value;
