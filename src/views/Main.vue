@@ -114,7 +114,7 @@ export default {
       /**
        * if isActive is equals to true the data interval will start.
        */
-      /*Click event
+      /*Click event of Registration tab
       *after clicked the Registration data interval will start
        */
     },

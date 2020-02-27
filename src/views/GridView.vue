@@ -171,14 +171,14 @@ export default {
           
         }else {
           /**
-           * clearInterval = clears the data and previous interval to set a new data and interval
+           * clearInterval = clears the data and previous interval to set a new data interval
            */
           clearInterval(this.timeData);
 
         }
       }
     },
-    /**isActive - checks if the page is Active/true or not Active/false */
+    /**isActive - checks if the page is Active/true or Active/false */
     isActive:{
       handler:function(activeTab){
         /**activeTab - if it's equal to true the data interval will start and if it's false the data interval will pause/stop. */
@@ -190,7 +190,7 @@ export default {
          
         }else {
           /**
-           * clearInterval = clears the data and previous interval to set a new data and interval
+           * clearInterval = clears the data and previous interval to set a new data interval
            */
           clearInterval(this.timeData);
         }
