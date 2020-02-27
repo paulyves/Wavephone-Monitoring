@@ -158,12 +158,8 @@ export default {
 
     timeInterval:{
       handler: function (valData) {
-        // console.log(valData, "valData");
-       
-        //  if (valData != null) {
           clearInterval(this.varInterval);
           this.varInterval = setInterval(this.myTimer, valData*1000);
-        //  }
       }
     }
   }
