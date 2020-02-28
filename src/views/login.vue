@@ -48,12 +48,8 @@
 </template>
 
 <script>
-// import Navbar from '../components/Navbar'
 export default {
 name: 'login',
-components: {
-// Navbar
-},
 data(){
   return{
       inputHostName:"",
@@ -69,7 +65,10 @@ methods:{
         // console.log("test")
         this.dataVal = true;
         if (this.inputUserName == 'admin' && this.inputPassword == 'bluewave888' && this.inputHostName.length != 0) {
-            console.log("login Success")
+            localStorage.setItem('hostname', this.inputHostName)
+
+            console.log("login Success", 
+)
              this.ValidData = false;
              this.$router.push({
               path: "/Main"

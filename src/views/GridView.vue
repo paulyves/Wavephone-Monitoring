@@ -16,6 +16,7 @@ export default {
   },
   data() {
     return {
+      firstWave: ''
       // arraydata: [],
       // listExt: "",
       // selectedExt: "",
@@ -30,13 +31,23 @@ export default {
 
   mounted() {
     this.myData();
-
+    this.waveNumbers();
   },
    created() {
       this.timeData = setInterval(this.myData, this.dataInterval*1000);
   },
   methods: {
     ...mapActions(["displaySample"]),
+    waveNumbers(){
+      let cells = document.getElementsByClassName('wave-list');
+      this.firstWave = cells[0].id;
+      let cellLength = parseInt(cells.length)
+      let firstNum = parseInt(this.firstWave)
+      this.lastWave = cellLength + firstNum - 1
+      this.$emit('waveNum', this.firstWave ,this.lastWave)
+     
+      
+    },
      myData() {
       this.displaySample().then(response => {
         for (let wave in response) {

@@ -14,7 +14,7 @@
 
       
       <b-tab title="Registration"  @click.prevent="pauseData1" active>
-        <Registration :dataInterval="timeInterval" :isActive="isActive"
+        <Registration :dataInterval="timeInterval" :isActive="isActive" @waveNum="waveNum" 
          />
       </b-tab>
       <b-tab title="Activities" @click.prevent="pauseData">
@@ -56,7 +56,10 @@
             </b-input-group-append>
           </b-form>
         </b-nav-item>
-        <b-nav-item class="formDate ">{{ today }}</b-nav-item>
+        <b-nav-item class=" ">Hostname: &nbsp;{{hostName}}</b-nav-item>
+        <b-nav-item class="mr-5">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
+        <!-- <b-nav-item class="mr-1" @click.prevent="logOutbtn">Logout</b-nav-item> -->
+        <b-nav-item class="ml-5 formDate">{{ today }}</b-nav-item>
       </template>
     </b-tabs>
    
@@ -83,20 +86,34 @@ export default {
       searchWaveNum: "",
       timeInterval: "2",
       timeData:"",
+      hostName: localStorage.getItem('hostname'),
+      firstwaveNum: '',
+      lastwaveNum:''
     };
   },
 
   mounted() {
+    // this.waveNum();
     this.dateTime();
     this.interval = setInterval(this.dateTime, 1000);
     /**
      * @param this.interval = sets the date/time interval
      */
   },
-  computed:{
-  },
+ 
   methods: {
     ...mapActions(["displaySample"]),
+    waveNum(firstVaL, lastVal){
+      /**
+       * @param firstVal = pass value from emit
+       * @param lastVal = pass value from emit
+       */
+      this.firstwaveNum = firstVaL;
+      /**@param this.firstwaveNum = display the first value of table cell */
+      this.lastwaveNum = lastVal;
+      /**@param this.lastwaveNum = display the last value of table cell */
+
+    },
     pauseData(){
       //@param btnActive - set btnActive = true; if "pauseData" or activity Tab is Click;
       /*
@@ -135,11 +152,16 @@ export default {
 </script>
 
 <style>
+#btn{
+  height: 30px;
+  background: #333333;
+  border:0;
+}
 .select-form{
   margin-left: 18% !important;
 }
 .search-form{
-  margin-right: 30% !important;
+  margin-right: 2% !important;
 }
 .material-icons {
   border-radius: 2px !important;
