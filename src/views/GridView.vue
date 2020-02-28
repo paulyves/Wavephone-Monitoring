@@ -39,11 +39,20 @@ export default {
   methods: {
     ...mapActions(["displaySample"]),
     waveNumbers(){
+      /** */
       let cells = document.getElementsByClassName('wave-list');
+      /**
+       * @param cells = to get the html elements
+       */
       this.firstWave = cells[0].id;
+      /**
+       * @param firstWave = first id in table cell
+       */
       let cellLength = parseInt(cells.length)
       let firstNum = parseInt(this.firstWave)
+      /**@param cellLength added to @param firstNum and subtract in 1 to get the last wave number */
       this.lastWave = cellLength + firstNum - 1
+      /**@param lastWave = last id in table cell */
       this.$emit('waveNum', this.firstWave ,this.lastWave)
      
       
