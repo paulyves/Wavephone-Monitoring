@@ -14,7 +14,7 @@
 
       
       <b-tab title="Registration"  @click.prevent="pauseData1" active>
-        <Registration :dataInterval="timeInterval" :isActive="isActive" @waveNum="waveNum" 
+        <Registration :dataInterval="timeInterval" :searchVal = "searchVal" :isActive="isActive"  @waveNum="waveNum" 
          />
       </b-tab>
       <b-tab title="Activities" @click.prevent="pauseData">
@@ -50,7 +50,7 @@
                 v-model="search"
                 type="search"
               ></b-form-input>
-              <b-button class="material-icons"
+              <b-button @click="btnSearch(search)" class="material-icons"
                 >search</b-button
               >
             </b-input-group-append>
@@ -79,6 +79,8 @@ export default {
   },
   data() {
     return {
+     
+      searchVal: "",
       btnActive: false,
       isActive:true,
       search: "",
@@ -146,6 +148,13 @@ export default {
         this.today = currentDate;
         this.today = moment(this.today, "M.DD.YYYY hh:mm:ss").format("L LT");
       }
+    },
+
+    btnSearch(searchKey){
+     // if "btnSearch" is Click set return to searchVal
+     //from search.
+      this.searchVal = searchKey;
+      
     }
   },
 };

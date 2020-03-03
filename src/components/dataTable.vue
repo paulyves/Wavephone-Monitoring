@@ -182,7 +182,7 @@ img {
   font-weight: bold;
 }
 .highlight {
-  border: #c3dffc solid 2px;
+  border: red solid 2px;
   scroll-behavior: smooth;
 }
 
