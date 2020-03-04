@@ -56,14 +56,16 @@
         :title="this.selectedWaveNum"
         id="bv-modal-example"
         size="lg"
+        @hidden="onHidden"
       >
         <div class="container">
           <table class="table-bordered container-fluid">
             <tr>
               <td><b>Register Status</b></td>
               <td>
-                <div v-show="selectedExt == true">True</div>
-                <div v-show="selectedExt == false">False</div>
+                <div v-if="selectedExt === true">True</div>
+                <div v-if="selectedExt === false">False</div>
+                <div v-show="selectedExt !== true && selectedExt !== false">Unused</div>
               </td>
             </tr>
             <tr>
@@ -110,6 +112,12 @@ export default {
     rulerNum(maxNum, row) {
       return `${maxNum * row}`;
     },
+     onHidden () {
+       /**event when closing the modal the params will be cleared. */
+       this.listExt = '';
+       this.selectedExt = '';
+  },
+    
     
     dataModal(wave) {
       /*@params {string}
@@ -117,14 +125,14 @@ export default {
       this.$bvModal.show("bv-modal-example");
       let freeSwitch = this.getFreeSwitch;
       let parsedSwitch = JSON.parse(JSON.stringify(freeSwitch));
+      
       this.selectedWaveNum = wave;
       for (let key in parsedSwitch) {
         let registeredDock = parsedSwitch[key].dock_registered;
         /* registeredExt = list of registered extension */
         let registeredExt = parsedSwitch[key].registered_extension;
         let newArray = [];
-        if (key == wave) {
-          this.$bvModal.show("bv-modal-example");
+        if (key === wave) {
           this.selectedExt = registeredDock;
           /* registeredDock = will display if dock is registered or not  */
           for (let i = 0; i < registeredExt.length; i++) {
@@ -134,6 +142,7 @@ export default {
           /* newArray.sort() = list of registered extension and will be displayed in order. */
         }
       }
+       
     }
   }
 };
