@@ -57,7 +57,7 @@
           </b-form>
         </b-nav-item>
         <b-nav-item class=" ">Hostname: &nbsp;{{hostName}}</b-nav-item>
-        <b-nav-item class="mr-5">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
+        <b-nav-item class="mr-3">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
         <!-- <b-nav-item class="mr-1" @click.prevent="logOutbtn">Logout</b-nav-item> -->
         <b-nav-item class="ml-5 formDate">{{ today }}</b-nav-item>
       </template>
