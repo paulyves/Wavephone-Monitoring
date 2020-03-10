@@ -59,6 +59,7 @@ export default {
     },
     myData() {
       this.displaySample().then(response => {
+        console.log(response)
         for (let wave in response) {
           let extensions = response[wave];
           let cell = document.getElementsByClassName(wave)[0];
@@ -163,6 +164,7 @@ export default {
     dataInterval: {
       handler: function(interval) {
         console.log(this.isActive, "is active ");
+        localStorage.setItem('intervalData', interval)
         /**@params this.isActive - if this is equals to true the data will start*/
         if (this.isActive == true) {
           /**
