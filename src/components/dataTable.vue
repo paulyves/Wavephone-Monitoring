@@ -94,8 +94,6 @@ export default {
       selectedWaveNum: "",
       listExt: "",
       selectedExt: "",
-      dockTrue: true,
-      dockFalse: true,
       value: 0
     };
   },
