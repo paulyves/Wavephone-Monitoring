@@ -57,9 +57,13 @@
           </b-form>
         </b-nav-item>
         <b-nav-item class=" ">Hostname: &nbsp;{{hostName}}</b-nav-item>
-        <b-nav-item class="mr-3">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
+        <b-nav-item class="mr-2">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
         <!-- <b-nav-item class="mr-1" @click.prevent="logOutbtn">Logout</b-nav-item> -->
-        <b-nav-item class="ml-5 formDate">{{ today }}</b-nav-item>
+        <b-nav-item class="ml-2 formDate">{{ today }}</b-nav-item>
+        <b-nav-item @click.prevent="logOutbtn()"><i class="material-icons">
+exit_to_app
+</i></b-nav-item>
+        
       </template>
     </b-tabs>
    
@@ -86,7 +90,7 @@ export default {
       search: "",
       today: "",
       searchWaveNum: "",
-      timeInterval: "2",
+      timeInterval: localStorage.getItem('intervalData'),
       timeData:"",
       hostName: localStorage.getItem('hostname'),
       firstwaveNum: '',
@@ -138,9 +142,21 @@ export default {
        */
     },
     logOutbtn() {
+      /**
+       * click event of log out button
+       */
+      this.timeInterval = '2';
+      /**after logging out @param this.timeInterval will set to '2' */
+      localStorage.clear('intervalData')
+      localStorage.setItem('intervalData', this.timeInterval)
+       /**
+       *localStorage.clear will clear the param when logging out 
+       *and the second localstorage.setItem will set a new or default value of @param this.timeInterval
+       */
       this.$router.push({
         path: "/"
       });
+
     },
     dateTime() {
       let currentDate = new Date();
@@ -161,6 +177,18 @@ export default {
 </script>
 
 <style>
+i.material-icons{
+  color:#ffffff !important;
+  background: #333333 !important;
+  border:none !important;
+}
+
+i.material-icons:hover{
+  color:#ffffff !important;
+  background: #333333 !important;
+  border:none !important;
+  cursor: pointer;
+}
 #btn{
   height: 30px;
   background: #333333;
