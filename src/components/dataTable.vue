@@ -65,7 +65,7 @@
               <td>
                 <div v-if="selectedExt === true">True</div>
                 <div v-if="selectedExt === false">False</div>
-                <div v-show="selectedExt !== true && selectedExt !== false">Unused</div>
+                <div v-if="selectedExt !== true && selectedExt !== false">Unused</div>
               </td>
             </tr>
             <tr>
