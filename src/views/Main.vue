@@ -12,17 +12,18 @@
         <!-- </div> -->
       </template>
 
-      
-      <b-tab title="Registration"  @click.prevent="pauseData1" active>
-        <Registration :dataInterval="timeInterval" :searchVal = "searchVal" :isActive="isActive"  @waveNum="waveNum" 
-         />
+      <b-tab title="Registration" @click.prevent="pauseData1" active>
+        <Registration
+          :dataInterval="timeInterval"
+          :searchVal="searchVal"
+          :isActive="isActive"
+          @waveNum="waveNum"
+        />
       </b-tab>
       <b-tab title="Activities" @click.prevent="pauseData">
-        <Activities :timeInterval ="timeInterval" :btnActive= "btnActive" />
+        <Activities :timeInterval="timeInterval" :btnActive="btnActive" />
       </b-tab>
-     <template v-slot:tabs-end>
-
-
+      <template v-slot:tabs-end>
         <b-nav-item class="select-form">
           <select
             name="timeList"
@@ -36,11 +37,8 @@
             <option value="30">20s</option>
             <option value="30">30s</option>
             <option value="60">60s</option>
-
-
           </select>
         </b-nav-item>
-
 
         <b-nav-item class="search-form">
           <b-form>
@@ -56,22 +54,26 @@
             </b-input-group-append>
           </b-form>
         </b-nav-item>
-        <b-nav-item class=" ">Hostname: &nbsp;{{hostName}}</b-nav-item>
-        <b-nav-item class="mr-2">Wave Number: &nbsp;{{firstwaveNum+ '-' +lastwaveNum}}</b-nav-item>
+        <b-nav-item class="host">Hostname: &nbsp;{{ hostName }}</b-nav-item>
+        <b-nav-item class="wave-num"
+          >Wave Number: &nbsp;{{ firstwaveNum + "-" + lastwaveNum }}</b-nav-item
+        >
         <!-- <b-nav-item class="mr-1" @click.prevent="logOutbtn">Logout</b-nav-item> -->
-        <b-nav-item class="ml-2 formDate">{{ today }}</b-nav-item>
-        <b-nav-item @click.prevent="logOutbtn()"><i class="material-icons">
-exit_to_app
-</i></b-nav-item>
-        
+        <b-nav-item class="formDate">{{ today }}</b-nav-item>
+        <b-nav-item
+          class="log-btn"
+          @click.prevent="logoutBtn()"
+          v-model="isActive"
+          ><i class="material-icons">
+            exit_to_app
+          </i></b-nav-item
+        >
       </template>
     </b-tabs>
-   
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import Registration from "./GridView.vue";
 import Activities from "./Activities.vue";
 import moment from "moment";
@@ -83,33 +85,29 @@ export default {
   },
   data() {
     return {
-     
       searchVal: "",
       btnActive: false,
-      isActive:true,
+      isActive: true,
       search: "",
       today: "",
       searchWaveNum: "",
-      timeInterval: localStorage.getItem('intervalData'),
-      timeData:"",
-      hostName: localStorage.getItem('hostname'),
-      firstwaveNum: '',
-      lastwaveNum:''
+      timeInterval: "2",
+      hostName: localStorage.getItem("hostname"),
+      firstwaveNum: "",
+      lastwaveNum: ""
     };
   },
 
   mounted() {
-    // this.waveNum();
     this.dateTime();
     this.interval = setInterval(this.dateTime, 1000);
     /**
      * @param this.interval = sets the date/time interval
      */
   },
- 
+
   methods: {
-    ...mapActions(["displaySample"]),
-    waveNum(firstVaL, lastVal){
+    waveNum(firstVaL, lastVal) {
       /**
        * @param firstVal = pass value from emit
        * @param lastVal = pass value from emit
@@ -118,46 +116,38 @@ export default {
       /**@param this.firstwaveNum = display the first value of table cell */
       this.lastwaveNum = lastVal;
       /**@param this.lastwaveNum = display the last value of table cell */
-
     },
-    pauseData(){
+    pauseData() {
       //@param btnActive - set btnActive = true; if "pauseData" or activity Tab is Click;
       /*
       isActive = if 'isActive' equals false the data interval will pause/stop;
-      */ 
+      */
+
       this.btnActive = true;
       this.isActive = false;
-      /* Click event of Activities tab 
-      *after clicked the Registration data will stop/pause
-      */
+      /* Click event of Activities tab
+       *after clicked the Registration data will stop/pause
+       */
     },
-    pauseData1(){
+    pauseData1() {
       this.btnActive = false;
       this.isActive = true;
       /**
        * if isActive is equals to true the data interval will start.
        */
       /*Click event of Registration tab
-      *after clicked the Registration data interval will start
+       *after clicked the Registration data interval will start
        */
     },
-    logOutbtn() {
-      /**
-       * click event of log out button
-       */
-      this.timeInterval = '2';
-      /**after logging out @param this.timeInterval will set to '2' */
-      localStorage.clear('intervalData')
-      localStorage.setItem('intervalData', this.timeInterval)
-       /**
-       *localStorage.clear will clear the param when logging out 
-       *and the second localstorage.setItem will set a new or default value of @param this.timeInterval
-       */
-      this.$router.push({
-        path: "/"
+    logoutBtn() {
+      /**click event for logging out, after clicked users will be directed to login */
+      /**@param this.isActive = when it's equal to false the data will stop */
+      this.isActive = false;
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push({ path: "/" });
       });
-
     },
+
     dateTime() {
       let currentDate = new Date();
       if (currentDate) {
@@ -166,38 +156,37 @@ export default {
       }
     },
 
-    btnSearch(searchKey){
-     // if "btnSearch" is Click set return to searchVal
-     //from search.
+    btnSearch(searchKey) {
+      // if "btnSearch" is Click set return to searchVal
+      //from search.
       this.searchVal = searchKey;
-      
     }
-  },
+  }
 };
 </script>
 
 <style>
-i.material-icons{
-  color:#ffffff !important;
+i.material-icons {
+  color: #ffffff !important;
   background: #333333 !important;
-  border:none !important;
+  border: none !important;
 }
 
-i.material-icons:hover{
-  color:#ffffff !important;
+i.material-icons:hover {
+  color: #ffffff !important;
   background: #333333 !important;
-  border:none !important;
+  border: none !important;
   cursor: pointer;
 }
-#btn{
+#btn {
   height: 30px;
   background: #333333;
-  border:0;
+  border: 0;
 }
-.select-form{
+.select-form {
   margin-left: 18% !important;
 }
-.search-form{
+.search-form {
   margin-right: 2% !important;
 }
 .material-icons {
@@ -207,7 +196,7 @@ i.material-icons:hover{
   background: #cccccc !important;
   color: #1a1a1a !important;
   height: 30px !important;
-  padding:0 !important;
+  padding: 0 !important;
 }
 .material-icons:hover {
   background-color: white;
@@ -215,7 +204,8 @@ i.material-icons:hover{
   background: #cccccc !important;
 }
 
-#colorFil, #colorFil:focus {
+#colorFil,
+#colorFil:focus {
   border-radius: 1px;
   border: 1px solid black;
   border-right: none;
@@ -226,7 +216,7 @@ i.material-icons:hover{
 .formInput:focus {
   border: black solid 1px;
   height: 30px !important;
-  padding:2px !important;
+  padding: 2px !important;
 }
 .nav-link.active {
   background-color: #1a1a1a !important;
