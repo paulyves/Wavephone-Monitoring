@@ -59,7 +59,7 @@ export default {
     },
     myData() {
       this.displaySample().then(response => {
-        console.log(response)
+        console.log(response);
         for (let wave in response) {
           let extensions = response[wave];
           let cell = document.getElementsByClassName(wave)[0];
@@ -122,15 +122,13 @@ export default {
       for (let wave in freeSwitch) {
         //set param from the for loop.
         let newWave = freeSwitch[wave].id;
-         let cell = document.getElementsByClassName(numWave)[0];
+        let cell = document.getElementsByClassName(numWave)[0];
         let cell1 = cell.cellIndex;
         let newWave1 = Math.floor(numWave / 100 - 10000);
-        let dataTag = document.getElementsByClassName("tr-colors")[
-          newWave1
-        ];
+        let dataTag = document.getElementsByClassName("tr-colors")[newWave1];
         let dataTr = document.getElementsByClassName("tr-colors");
-        
-        //numWave - is a Current input search. 
+
+        //numWave - is a Current input search.
         //newWave - is a value from the for loop, from axios call.
         //if the current input search is Match from Wave number in axios
         if (numWave == newWave) {
@@ -164,7 +162,7 @@ export default {
     dataInterval: {
       handler: function(interval) {
         console.log(this.isActive, "is active ");
-        localStorage.setItem('intervalData', interval)
+        localStorage.setItem("intervalData", interval);
         /**@params this.isActive - if this is equals to true the data will start*/
         if (this.isActive == true) {
           /**
@@ -213,20 +211,19 @@ export default {
             //call the method for highlighting wave Number. "this.btnWave"
             this.btnWave(waveNumberVal);
           } else {
-
             // if "waveNumberVal" is existing but the starting value  of"waveNumberVal" is not 100 and
             // not 7 digit.
 
             //set param from arrays.
             let arrayOne = this.waveData[0];
             let arrayTwo = this.waveData[1];
-            
+
             //if the previous input search is highlighted.
             // and if "arrayOne" is existing, the previous input search is remove.
             if (arrayOne != null && arrayTwo == null) {
               let freeSwitch = document.getElementsByClassName("wave-list");
               for (let wave in freeSwitch) {
-                 //set param for looping.
+                //set param for looping.
                 let newWave = freeSwitch[wave].id;
                 let cell = document.getElementsByClassName(arrayOne)[0];
 
@@ -254,7 +251,7 @@ export default {
             if (arrayTwo != null && arrayOne != null) {
               let freeSwitch = document.getElementsByClassName("wave-list");
               for (let wave in freeSwitch) {
-                 //set param for looping.
+                //set param for looping.
                 let newWave = freeSwitch[wave].id;
                 let cell = document.getElementsByClassName(arrayTwo)[0];
 
@@ -276,41 +273,38 @@ export default {
               }
             }
           }
-
         } else {
-
-
           // if the previous input seach is existing from the Array, And the Current input
           //Search is "null" or not exising. the previous input search will remove.
           let arrayOne = this.waveData[0];
           let freeSwitch = document.getElementsByClassName("wave-list");
-              for (let wave in freeSwitch) {
-                 //set param for looping.
-                let newWave = freeSwitch[wave].id;
-                let cell = document.getElementsByClassName(arrayOne)[0];
+          for (let wave in freeSwitch) {
+            //set param for looping.
+            let newWave = freeSwitch[wave].id;
+            let cell = document.getElementsByClassName(arrayOne)[0];
 
-                let cell1 = cell.cellIndex;
-                let newWave1 = Math.floor(arrayOne / 100 - 10000);
-                let dataTag = document.getElementsByClassName("tr-colors")[
-                  newWave1
-                ];
-                let dataTr = document.getElementsByClassName("tr-colors");
-                if (arrayOne == newWave) {
-                  this.waveData.length = 0;
+            let cell1 = cell.cellIndex;
+            let newWave1 = Math.floor(arrayOne / 100 - 10000);
+            let dataTag = document.getElementsByClassName("tr-colors")[
+              newWave1
+            ];
+            let dataTr = document.getElementsByClassName("tr-colors");
+            if (arrayOne == newWave) {
+              this.waveData.length = 0;
 
-                  for (let tr in dataTr) {
-                    dataTag.classList.remove("horizontal-border");
-                    dataTr[tr].cells[cell1].classList.remove("border-color");
-                    cell.classList.remove("highlight");
-                  }
-                }
+              for (let tr in dataTr) {
+                dataTag.classList.remove("horizontal-border");
+                dataTr[tr].cells[cell1].classList.remove("border-color");
+                cell.classList.remove("highlight");
               }
+            }
+          }
         }
       }
     },
 
     waveData: {
-      // waveData  - is an Array, this is a Responsible for removing highligted. 
+      // waveData  - is an Array, this is a Responsible for removing highligted.
       handler: function(arrayValue) {
         //if "arrayValue" is lenght of 2. And the 1st Array or previous input search will do a
         // for loop to find the previous arrayValue and remove it.
