@@ -143,6 +143,7 @@ export default {
       /**click event for logging out, after clicked users will be directed to login */
       /**@param this.isActive = when it's equal to false the data will stop */
       this.isActive = false;
+      this.btnActive = false;
       this.$store.dispatch("logout").then(() => {
         this.$router.push({ path: "/" });
       });
