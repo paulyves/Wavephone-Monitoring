@@ -62,7 +62,11 @@ const mutations = {
 };
 
 const actions = {
-  displaySample({ commit }) {
+  displaySample({ commit, rootState }) {
+    let dataToken = JSON.parse(JSON.stringify(rootState.Data.token));
+
+    axios.defaults.headers.common["Authorization"] = "Bearer " + dataToken;
+
     return new Promise((resolve, reject) => {
       axios
         .get(

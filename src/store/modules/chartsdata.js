@@ -116,7 +116,11 @@ const mutations = {
 };
 
 const actions = {
-  callAllDataActivity({ commit }) {
+  callAllDataActivity({ commit, rootState }) {
+    let dataToken = JSON.parse(JSON.stringify(rootState.Data.token));
+
+    axios.defaults.headers.common["Authorization"] =
+    "Bearer " + dataToken;
     return new Promise((resolve, reject) => {
       axios
         .get("http://developer.bwddns.net:8080/fs-rest/fs/snmp")
@@ -140,7 +144,11 @@ const actions = {
     });
   },
 
-  callData({ commit }) {
+  callData({ commit, rootState }) {
+    let dataToken = JSON.parse(JSON.stringify(rootState.Data.token));
+
+    axios.defaults.headers.common["Authorization"] =
+    "Bearer " + dataToken;
     return new Promise((resolve, reject) => {
       axios
         .get("http://developer.bwddns.net:8080/fs-rest/fs/calls?waveNumber")
